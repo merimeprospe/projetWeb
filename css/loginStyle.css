@@ -79,6 +79,33 @@ h1 {
     -o-border-radius: 5px;
 }
 
+.alerte {
+    display: flex;
+    align-items: center;
+    max-width: fit-content;
+    padding: 0.7rem;
+    transition: all 1s ease;
+    border-radius: 3px; 
+    background-color: #fd282866;
+    color: #fff;
+    border-left: 8px solid rgb(243 5 5);    
+    margin-top: 24px;
+    position: fixed;
+    z-index: 10;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
 .login-container form input:focus {
     box-shadow: 0 0 16px 1px rgba(0, 0, 0, 0.2);
     animation: wobble 0.3s ease-in;
