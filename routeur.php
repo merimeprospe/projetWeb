@@ -15,7 +15,8 @@
 
 
     if ($_GET["action"]=="accueil"){
-        require "vues/accueil.php";
+        require_once "controleurs/accueil.php";
+        listes();
         exit();
     }
 

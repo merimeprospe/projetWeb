@@ -64,6 +64,7 @@ class UtilisateurDAO {
         $_SESSION["login"] = $login;
 
         // redirection vers accueil, éventuellement spécifique à l'utilisateur
-        header("Location:../pages/accueil.php");
+        //header("Location:../pages/accueil.php");
+        header("Location:../routeur.php?action=accueil");
     }
 }
