@@ -30,7 +30,10 @@
                 <div class="create">
                     <label class="btn btn-primary" for="create post">Create</label>
                     <div class="profile-photo">
-                        <img src="assets/profile_img-88x88/profile1-88x88.jpg">
+                        <a href="profile.php">
+                            <img src="assets/profile_img-88x88/profile1-88x88.jpg">
+                        </a>
+                        
                     </div>
                 </div>
             </div>

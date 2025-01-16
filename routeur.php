@@ -20,7 +20,7 @@
     }
 
 
-    if ($_GET["action"]=="traiterAuthentification"){
+    /* if ($_GET["action"]=="traiterAuthentification"){
         require_once "controleurs/controleurLogin.php";
         login();
         exit(); // inutile ici puisque le login redirige, mais plus tranquilisant à la relecture de ce fichier seul
@@ -60,4 +60,4 @@
         exit();
     }
 
-    die("tutépomé ?");
+ */    die("tutépomé ?");
