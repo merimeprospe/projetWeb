@@ -1,5 +1,7 @@
 <?php
 
+require_once "../modules/Entites/Utilisateur.php";
+
 class UtilisateurDAO {
     private $pdo;
 
@@ -23,6 +25,14 @@ class UtilisateurDAO {
         $stmt->execute(['id_user' => $id_user]);
         return $stmt->fetchObject('Utilisateur');
     }
+    
+    public function readByInitial($initial) {
+        $stmt = $this->pdo->prepare('SELECT * FROM Utilisateur WHERE nom LIKE :initial OR prenom LIKE :initial');
+        $likeInitial = $initial . '%';
+        $stmt->execute(['initial' => $likeInitial]);
+        return $stmt->fetchAll(PDO::FETCH_CLASS);
+    }
+    
 
     public function update(Utilisateur $utilisateur) {
         $stmt = $this->pdo->prepare('UPDATE Utilisateur SET nom = :nom, prenom = :prenom, email = :email, password = :password, id_role = :id_role WHERE id_user = :id_user');
@@ -43,7 +53,7 @@ class UtilisateurDAO {
 
     public function authenticate($login, $pass) {
         // Vérification dans la base si le mot de passe et le login se trouvent dans la base
-        $textR = "SELECT id_role FROM utilisateur WHERE email=:login AND password=:pass";
+        $textR = "SELECT id_role, id_user FROM utilisateur WHERE email=:login AND password=:pass";
         $req = $this->pdo->prepare($textR);
         $req->bindParam(":login", $login);
         $req->bindParam(":pass", $pass);
@@ -61,7 +71,7 @@ class UtilisateurDAO {
 
         // Si on arrive là : login/pass OK (count==1)
         // Stockage en session : 
-        $_SESSION["login"] = $login;
+        $_SESSION["id"] = $tabRes[0]["id_user"];
 
         // redirection vers accueil, éventuellement spécifique à l'utilisateur
         //header("Location:../pages/accueil.php");

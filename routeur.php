@@ -5,7 +5,7 @@
 
 
     // syntaxe attendue : router.php?action=monAction&param1=valeurA&param2=valeurB...
-
+    
     // page de connextion : routeur sans action
     if (!isset($_GET["action"])){
         // => accueil;
@@ -16,7 +16,6 @@
 
     if ($_GET["action"]=="accueil"){
         require_once "controleurs/accueil.php";
-        listes();
         exit();
     }
 

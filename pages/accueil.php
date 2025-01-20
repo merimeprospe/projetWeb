@@ -12,132 +12,9 @@
         <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
     </head>
     <style>
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        .input{
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .file-input-container {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .file-input-container input[type="file"] {
-            display: none;
-        }
-        .file-input-container label {
-            background: #0998c1;
-            color: #fff;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-right: 10px;
-        }
-        .file-input-container span {
-            font-size: 14px;
-            color: #555;
-        }
-        .button {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            background: #0998c1;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .button:hover {
-            background:rgb(210, 232, 243);
-            color: #0998c1;
-            
-        }
-        body {font-family: Arial, Helvetica, sans-serif;}
-
-        /* The Modal (background) */
-        .modal {
-        display: none; /* Hidden by default */
-        position: fixed; /* Stay in place */
-        z-index: 1; /* Sit on top */
-        padding-top: 100px; /* Location of the box */
-        left: 0;
-        top: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgb(0,0,0); /* Fallback color */
-        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-        }
-
-        /* Modal Content */
-        .modal-content {
-        z-index: 10px;
-        border-radius: 10px;
-        position: relative;
-        background-color: #fefefe;
-        margin: auto;
-        padding: 0;
-        padding: 4vh;
-        border: 1px solid #888;
-        width: 80%;
-        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-        -webkit-animation-name: animatetop;
-        -webkit-animation-duration: 0.4s;
-        animation-name: animatetop;
-        animation-duration: 0.4s
         
-        }
-
-        /* Add Animation */
-        @-webkit-keyframes animatetop {
-        from {top:-300px; opacity:0} 
-        to {top:0; opacity:1}
-        }
-
-        @keyframes animatetop {
-        from {top:-300px; opacity:0}
-        to {top:0; opacity:1}
-        }
-
-        /* The Close Button */
-        .close {
-        color: #0998c1;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-        color: #000;
-        text-decoration: none;
-        cursor: pointer;
-        }
-
-        .modal-header {
-        padding: 2px 16px;
-        background-color:rgb(255, 255, 255);
-        color: white;
-        }
-
-        .modal-body {padding: 2px 16px;}
-
-        .modal-footer {
-        padding: 2px 16px;
-        background-color: #5cb85c;
-        color: white;
-        }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <body>
 
         <!--------Navigation Section---------->
@@ -152,10 +29,10 @@
                 </div>
                 <div class="search-bar">
                     <i class="uil uil-search"></i>
-                    <input type="search" placeholder="Search for inspiration and projects...">
+                    <input type="search" placeholder="Search for inspiration and projects..." id="search">
                 </div>
                 <div class="create">
-                    <label class="btn btn-primary" for="create post">Create</label>
+                    <label class="btn btn-primary" onclick="rediriger()" for="create post">Create</label>
                     <div class="profile-photo">
                         <img src="assets/infos/R.jpeg">
                     </div>
@@ -189,64 +66,23 @@
                             <h3>Home</h3>
                         </a>
                         <a class="menu-item" id="notifications">
-                            <span><i class="uil uil-bell"><small class="notification-count">9+</small></i></span>
+                            <span><i class="uil uil-bell"><small class="notification-count"><?php echo count($notif)  ?></small></i></span>
                             <h3>Notification</h3>
                             <!--Notification Pop Up Section-->
-                            <div class="notifications-popup">
-                                <div>
-                                    <div class="profile-photo">
-                                        <img src="assets/infos/R.jpeg" />
+                            <div class="notifications-popup scrollable-div">
+                                <?php
+                                foreach($notif as $uneLigne) {
+                                    ?>
+                                    <div style= "display: flex;gap: 10px; margin:10px">
+                                        <div class="profile-photo">
+                                            <img src="assets/infos/R.jpeg" />
+                                        </div>
+                                        <div class="notificaion-body" style="margin-top: 10px;">
+                                            <b> <?php echo $uneLigne->getSendUser() ?></b> <?php echo $uneLigne->getMessage() ?>
+                                            <small class="text-muted">Now</small>
+                                        </div>
                                     </div>
-                                    <div class="notificaion-body">
-                                        <b>Tayyab Javed</b> accepted your friend request
-                                        <small class="text-muted">Now</small>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="profile-photo">
-                                        <img src="assets/infos/R.jpeg" />
-                                    </div>
-                                    <div class="notificaion-body">
-                                        <b>Spider-Man</b> accepted your friend request
-                                        <small class="text-muted">7 Minutes Ago</small>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="profile-photo">
-                                        <img src="assets/infos/R.jpeg" />
-                                    </div>
-                                    <div class="notificaion-body">
-                                        <b>Ferhan Ahmed</b> commendted on your post
-                                        <small class="text-muted">1 Hour Ago</small>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="profile-photo">
-                                        <img src="assets/infos/R.jpeg "/>
-                                    </div>
-                                    <div class="notificaion-body">
-                                        <b>Frosty</b> and <b>372 others</b> liked your post
-                                        <small class="text-muted">1 Day Ago</small>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="profile-photo">
-                                        <img src="assets/infos/R.jpeg "/>
-                                    </div>
-                                    <div class="notificaion-body">
-                                        <b>Sheikhba Mohammed</b> commented on a post that you was tagged in
-                                        <small class="text-muted">2 Day Ago</small>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="profile-photo">
-                                        <img src="assets/infos/R.jpeg "/>
-                                    </div>
-                                    <div class="notificaion-body">
-                                        <b>Warm Soda</b> has sent you a friend request
-                                        <small class="text-muted">4 Days Ago</small>
-                                    </div>
-                                </div>
+                                <?php }?>
                             </div>
                             <!--End of Notification Popup Section-->
                         </a>
@@ -442,69 +278,35 @@
                     <!--Friend Request-->
                     <div class="friend-requests">
                         <h4>Requests</h4>
-                        <div class="request">
-                            <div class="info">
-                                <div class="profile-photo">
-                                    <img src="./assets/profile_img-88x88/profile5-88x88.jpg">
+                     <?php
+                        foreach($invits as $uneLigne) {
+                            if ($uneLigne->decision==false) {
+                                
+                            ?>
+
+                            <div class="request" id="<?php echo 'btn' . $uneLigne->id ?>">
+                                <div class="info">
+                                    <div class="profile-photo">
+                                        <img src="assets/infos/R.jpeg">
+                                    </div>
+                                    <div>
+                                        <h5><?php echo $uneLigne->amie ?></h5>
+                                        <p class="text-muted" style="font-size: 13px;">
+                                         <?php echo $uneLigne->date ?>
+                                        </p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h5>Frosty</h5>
-                                    <p class="text-muted">
-                                       8 mutual friends 
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="action">
-                                <button class="btn btn-primary">
-                                    Accept
-                                </button>
-                                <button class="btn">
-                                    Decline
-                                </button>
-                            </div>
-                        </div>
-                        <div class="request">
-                            <div class="info">
-                                <div class="profile-photo">
-                                    <img src="./assets/profile_img-88x88/profile7-88x88.jpg">
-                                </div>
-                                <div>
-                                    <h5>Warm Soda</h5>
-                                    <p class="text-muted">
-                                       4 mutual friends 
-                                    </p>
+                                <div class="action">
+                                    <button class="btn btn-primary" onclick="accepter(<?php echo $uneLigne->id?>)">
+                                        Accept
+                                    </button>
+                                    <button class="btn btn-secondary" onclick="refuser(<?php echo $uneLigne->id?>)">
+                                        Decline
+                                    </button>
                                 </div>
                             </div>
-                            <div class="action">
-                                <button class="btn btn-primary">
-                                    Accept
-                                </button>
-                                <button class="btn">
-                                    Decline
-                                </button>
-                            </div>
-                        </div>
-                        <div class="request">
-                            <div class="info">
-                                <div class="profile-photo">
-                                    <img src="./assets/profile_img-88x88/profile3-88x88.jpg">
-                                </div>
-                                <div>
-                                    <h5>Spider-Man</h5>
-                                    <p class="text-muted">
-                                       1 mutual friends 
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="action">
-                                <button class="btn btn-primary">
-                                    Accept
-                                </button>
-                                <button class="btn">
-                                    Decline
-                                </button>
-                            </div>
-                        </div>
+                        <?php }}?>
+                        
                     </div>
                 </div>
                 <!--End of Right Section-->
@@ -615,6 +417,21 @@
         </div>
         
         <script>
+            function refuser(id) {
+                console.log("btn: "+id);
+                $.get("controleurs/deletAmie.php?id="+id+"&action=deletid", traiterReponseDemande01(id));
+            }
+
+            function accepter(id) {
+                console.log("btn: accepter"+id);
+                $.get("controleurs/deletAmie.php?id="+id+"&action=Accepter", traiterReponseDemande01(id));
+            }
+
+            function traiterReponseDemande01(id) {
+                console.log("btn"+id);
+                document.getElementById("btn"+id).className  = "hidden"
+            }
+
             const fileInput = document.getElementById('image');
             const fileName = document.getElementById('file-name');
 
@@ -651,6 +468,13 @@
             if (event.target == modal) {
                 modal.style.display = "none";
             }
+            }
+            function rediriger() {
+                if (document.getElementById("search").value) {
+                    
+                   window.location.href = "controleurs/amie.php?val="+document.getElementById("search").value;
+                }
+                
             }
         </script>
         <script src="js/script.js"></script>

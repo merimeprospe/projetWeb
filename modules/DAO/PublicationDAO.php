@@ -12,7 +12,6 @@ class PublicationDAO {
         $sql = "INSERT INTO publication (titre, contenu, photo, id_user) VALUES ('$titre', '$contenu', '$photo', '1')";
 
         if ($this->pdo->query($sql) == TRUE) {
-            echo "Nouvel objet enregistré avec succès";
             header("Location:../routeur.php?action=accueil");
         } else {
             echo "Erreur: " . $sql . "<br>" . $this->conn->error;
