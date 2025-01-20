@@ -8,7 +8,7 @@
         <meta name="description" content="TMF's Social Media">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- My Custom Stylesheet -->
-        <link rel="stylesheet" href="css/accueil_.css">
+        <link rel="stylesheet" href="../css/accueil_.css">
         <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
     </head>
     <style>
@@ -78,6 +78,9 @@
         background-color: rgb(0,0,0); /* Fallback color */
         background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
         }
+        /* Other styles */ 
+        .menu-items { display: inline-block; margin-right: 20px; /* Add space between icons */ } 
+        .menu-items i { width: 30px; /* Increase width */ height: 30px; /* Increase height */ font-size: 30px; /* Increase font size for bigger icons */ }
 
         /* Modal Content */
         .modal-content {
@@ -142,28 +145,25 @@
 
         <!--------Navigation Section---------->
 
-        <nav>
-            <div class="container">
+        <nav> 
+            <div class="container"> 
                 <div class="logo">
-                    <img src="assets/images/logo.jpg" style="width: 12%; height: 10%;">
-                    <h2 class="log">
-                        Social
-                    </h2>
-                </div>
-                <div class="search-bar">
+                     <img src="assets/images/logo.jpg" style="width: 12%; height: 10%;"> 
+                     <h2 class="log"> Social </h2> 
+                </div> 
+                <div class="search-bar"> 
                     <i class="uil uil-search"></i>
-                    <input type="search" placeholder="Search for inspiration and projects...">
-                </div>
+                    <input type="search" placeholder="Search for groups."> 
+                </div> 
                 <div class="create">
-                    <label class="btn btn-primary" for="create post">Create</label>
-                    <div class="profile-photo">
-                        <img src="assets/infos/R.jpeg">
-                    </div>
+                     <label class="btn btn-primary" for="create post">Create</label> 
                 </div>
-            </div>
-        </nav>
-        <!--------End of Navigation Section---------->
-        <!-----------Main----------->
+                 <div class="menu-items"> 
+                    <i class="uil uil-home"></i> 
+                </div> 
+               
+                </div> 
+                </nav>
 
         <main>
             <div class="container">
@@ -174,102 +174,76 @@
                         <div class="profile-photo">
                             <img src="assets/infos/R.jpeg" />
                         </div>
-                        <div class="handle">
-                            <h4>Ren Lum-Fao</h4>
-                            <p class="text-muted">
-                                @renlumfao
-                            </p>
+                        <div class="card-body">
+                            <h5 class="card-title">Group Name</h5>
+                            
                         </div>
                     </a>
                     <!--End Of Profile Section-->
                     <!--Side Bar Section-->
                     <div class="sidebar">
                         <a class="menu-item active">
-                            <span><i class="uil uil-home"></i></span>
-                            <h3>Home</h3>
+                            <span><i class="uil uil-add"></i></span>
+                            <h3>MY GROUPS</h3>
                         </a>
-                        <a class="menu-item" href="../controleurs/pages.php">
-                            <span><i class="uil uil-home"></i></span>
-                            <h3>mes groups</h3>
+                        <a class="profile">
+                        <div class="profile-photo">
+                            <img src="assets/infos/R.jpeg" />
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Group Name</h5>
+                            
+                        </div>
                         </a>
-                        <a class="menu-item" id="notifications">
-                            <span><i class="uil uil-bell"><small class="notification-count">9+</small></i></span>
-                            <h3>Notification</h3>
-                            <!--Notification Pop Up Section-->
-                            <div class="notifications-popup">
-                                <div>
-                                    <div class="profile-photo">
-                                        <img src="assets/infos/R.jpeg" />
-                                    </div>
-                                    <div class="notificaion-body">
-                                        <b>Tayyab Javed</b> accepted your friend request
-                                        <small class="text-muted">Now</small>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="profile-photo">
-                                        <img src="assets/infos/R.jpeg" />
-                                    </div>
-                                    <div class="notificaion-body">
-                                        <b>Spider-Man</b> accepted your friend request
-                                        <small class="text-muted">7 Minutes Ago</small>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="profile-photo">
-                                        <img src="assets/infos/R.jpeg" />
-                                    </div>
-                                    <div class="notificaion-body">
-                                        <b>Ferhan Ahmed</b> commendted on your post
-                                        <small class="text-muted">1 Hour Ago</small>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="profile-photo">
-                                        <img src="assets/infos/R.jpeg "/>
-                                    </div>
-                                    <div class="notificaion-body">
-                                        <b>Frosty</b> and <b>372 others</b> liked your post
-                                        <small class="text-muted">1 Day Ago</small>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="profile-photo">
-                                        <img src="assets/infos/R.jpeg "/>
-                                    </div>
-                                    <div class="notificaion-body">
-                                        <b>Sheikhba Mohammed</b> commented on a post that you was tagged in
-                                        <small class="text-muted">2 Day Ago</small>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="profile-photo">
-                                        <img src="assets/infos/R.jpeg "/>
-                                    </div>
-                                    <div class="notificaion-body">
-                                        <b>Warm Soda</b> has sent you a friend request
-                                        <small class="text-muted">4 Days Ago</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--End of Notification Popup Section-->
+                        <a class="profile">
+                        <div class="profile-photo">
+                            <img src="assets/infos/R.jpeg" />
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Group Name</h5>
+                            
+                        </div>
                         </a>
-                        <a class="menu-item" id="messages-notification">
-                            <span><i class="uil uil-envelope"><small class="notification-count">6+</small></i></span>
-                            <h3>Message</h3>
+                        <a class="profile">
+                        <div class="profile-photo">
+                            <img src="assets/infos/R.jpeg" />
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Group Name</h5>
+                            
+                        </div>
                         </a>
-                        <a class="menu-item" id="theme">
-                            <span><i class="uil uil-palette"></i></span>
-                            <h3>Theme</h3>
+                        <a class="profile">
+                        <div class="profile-photo">
+                            <img src="assets/infos/R.jpeg" />
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Group Name</h5>
+                            
+                        </div>
                         </a>
-                        <a class="menu-item">
-                            <span><i class="uil uil-setting"></i></span>
-                            <h3>Settings</h3>
-                        </a>    
+                        <a class="profile">
+                        <div class="profile-photo">
+                            <img src="assets/infos/R.jpeg" />
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Group Name</h5>
+                            
+                        </div>
+                        </a>
+                        <a class="profile">
+                        <div class="profile-photo">
+                            <img src="assets/infos/R.jpeg" />
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Group Name</h5>
+                            
+                        </div>
+                        </a>
+                        
                     </div>
                     <!--End Of Sidebar Section-->
-                    <label for="create-post" class="btn btn-primary">Create Post</label>
-                </div>
+               </div>
                 <!--End Of Left Section-->
                 <!--Middle Section-->
                 <div class="middle">
@@ -386,18 +360,7 @@
                         <div class="heading">
                             <h4>Messages</h4><i class="uil uil-edit"></i>
                         </div>
-                        <!--Search Bar-->
-                        <div class="search-bar">
-                            <i class="uil uil-search"></i>
-                            <input type="search" placeholder="Search message..." id="message-search">
-                        </div>
-                        <!--End of Search Bar-->
-                        <!--Messages Category-->
-                        <div class="category">
-                            <h6 class="active">Primary</h6>
-                            <h6>General</h6>
-                            <h6 class="message-requests">Requests(7)</h6>
-                        </div>
+                        
                         <!--End of Messages Category-->
                         <!--Message One-->
                         <div class="message">
@@ -405,7 +368,7 @@
                                 <img src="./assets/profile_img-88x88/Profile4-88x-88.jpg" >
                             </div>
                             <div class="message-body">
-                                <h5>Ferhan Ahmed</h5>
+                                <h6>Ferhan Ahmed</h6>
                                 <p class="text-muted">I love my cars too much 😍</p>
                             </div>
                         </div>
@@ -416,7 +379,7 @@
                                 <div class="active"></div>
                             </div>
                             <div class="message-body">
-                                <h5>Tayyab Javed</h5>
+                                <h6>Tayyab Javed</h6>
                                 <p class="text-bold">Hey Check Out My Bird 🦜</p>
                             </div>
                         </div>
@@ -426,7 +389,7 @@
                                 <img src="./assets/profile_img-88x88/profile7-88x88.jpg" >
                             </div>
                             <div class="message-body">
-                                <h5>Warm Soda</h5>
+                                <h6>Warm Soda</h6>
                                 <p class="text-muted">Look at my doggy 🐶</p>
                             </div>
                         </div>
@@ -437,80 +400,125 @@
                                 <div class="active"></div>
                             </div>
                             <div class="message-body">
-                                <h5>Sheikhba Mohammed</h5>
+                                <h6>Sheikhba Mohammed</h6>
                                 <p class="text-bold">🐍 Hey, stop ignoring me!</p>
                             </div>
                         </div>
+                        <div class="message">
+                            <div class="profile-photo">
+                                <img src="./assets/profile_img-88x88/profile6-88x88.jpg" >
+                                <div class="active"></div>
+                            </div>
+                            <div class="message-body">
+                                <h6>Sheikhba Mohammed</h6>
+                                <p class="text-bold">🐍 Hey, stop ignoring me!</p>
+                            </div>
+                        </div>
+                        <div class="message">
+                            <div class="profile-photo">
+                                <img src="./assets/profile_img-88x88/profile6-88x88.jpg" >
+                                <div class="active"></div>
+                            </div>
+                            <div class="message-body">
+                                <h6>Sheikhba Mohammed</h6>
+                                <p class="text-bold">🐍 Hey, stop ignoring me!</p>
+                            </div>
+                        </div>
+                        <div class="message">
+                            <div class="profile-photo">
+                                <img src="./assets/profile_img-88x88/profile6-88x88.jpg" >
+                                <div class="active"></div>
+                            </div>
+                            <div class="message-body">
+                                <h6>Sheikhba Mohammed</h6>
+                                <p class="text-bold">🐍 Hey, stop ignoring me!</p>
+                            </div>
+                        </div>
+                        <div class="message">
+                            <div class="profile-photo">
+                                <img src="./assets/profile_img-88x88/profile6-88x88.jpg" >
+                                <div class="active"></div>
+                            </div>
+                            <div class="message-body">
+                                <h6>Sheikhba Mohammed</h6>
+                                <p class="text-bold">🐍 Hey, stop ignoring me!</p>
+                            </div>
+                        </div>
+                        <div class="message">
+                            <div class="profile-photo">
+                                <img src="./assets/profile_img-88x88/profile6-88x88.jpg" >
+                                <div class="active"></div>
+                            </div>
+                            <div class="message-body">
+                                <h6>Sheikhba Mohammed</h6>
+                                <p class="text-bold">🐍 Hey, stop ignoring me!</p>
+                            </div>
+                        </div>
+                        <div class="message">
+                            <div class="profile-photo">
+                                <img src="./assets/profile_img-88x88/profile6-88x88.jpg" >
+                                <div class="active"></div>
+                            </div>
+                            <div class="message-body">
+                                <h6>Sheikhba Mohammed</h6>
+                                <p class="text-bold">🐍 Hey, stop ignoring me!</p>
+                            </div>
+                        </div>
+                        <div class="message">
+                            <div class="profile-photo">
+                                <img src="./assets/profile_img-88x88/profile6-88x88.jpg" >
+                                <div class="active"></div>
+                            </div>
+                            <div class="message-body">
+                                <h6>Sheikhba Mohammed</h6>
+                                <p class="text-bold">🐍 Hey, stop ignoring me!</p>
+                            </div>
+                        </div>
+                        <div class="message">
+                            <div class="profile-photo">
+                                <img src="./assets/profile_img-88x88/profile6-88x88.jpg" >
+                                <div class="active"></div>
+                            </div>
+                            <div class="message-body">
+                                <h6>Sheikhba Mohammed</h6>
+                                <p class="text-bold">🐍 Hey, stop ignoring me!</p>
+                            </div>
+                        </div>
+                        <div class="message">
+                            <div class="profile-photo">
+                                <img src="./assets/profile_img-88x88/profile6-88x88.jpg" >
+                                <div class="active"></div>
+                            </div>
+                            <div class="message-body">
+                                <h6>Sheikhba Mohammed</h6>
+                                <p class="text-bold">🐍 Hey, stop ignoring me!</p>
+                            </div>
+                        </div>
+                        <div class="message">
+                            <div class="profile-photo">
+                                <img src="./assets/profile_img-88x88/profile6-88x88.jpg" >
+                                <div class="active"></div>
+                            </div>
+                            <div class="message-body">
+                                <h6>Sheikhba Mohammed</h6>
+                                <p class="text-bold">🐍 Hey, stop ignoring me!</p>
+                            </div>
+                        </div>
+                        <div class="message">
+                            <div class="profile-photo">
+                                <img src="./assets/profile_img-88x88/profile6-88x88.jpg" >
+                                <div class="active"></div>
+                            </div>
+                            <div class="message-body">
+                                <h6>Sheikhba Mohammed</h6>
+                                <p class="text-bold">🐍 Hey, stop ignoring me!</p>
+                            </div>
+                        </div>
+
                     </div>
                     <!--End of Message-->
                     <!--Friend Request-->
-                    <div class="friend-requests">
-                        <h4>Requests</h4>
-                        <div class="request">
-                            <div class="info">
-                                <div class="profile-photo">
-                                    <img src="./assets/profile_img-88x88/profile5-88x88.jpg">
-                                </div>
-                                <div>
-                                    <h5>Frosty</h5>
-                                    <p class="text-muted">
-                                       8 mutual friends 
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="action">
-                                <button class="btn btn-primary">
-                                    Accept
-                                </button>
-                                <button class="btn">
-                                    Decline
-                                </button>
-                            </div>
-                        </div>
-                        <div class="request">
-                            <div class="info">
-                                <div class="profile-photo">
-                                    <img src="./assets/profile_img-88x88/profile7-88x88.jpg">
-                                </div>
-                                <div>
-                                    <h5>Warm Soda</h5>
-                                    <p class="text-muted">
-                                       4 mutual friends 
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="action">
-                                <button class="btn btn-primary">
-                                    Accept
-                                </button>
-                                <button class="btn">
-                                    Decline
-                                </button>
-                            </div>
-                        </div>
-                        <div class="request">
-                            <div class="info">
-                                <div class="profile-photo">
-                                    <img src="./assets/profile_img-88x88/profile3-88x88.jpg">
-                                </div>
-                                <div>
-                                    <h5>Spider-Man</h5>
-                                    <p class="text-muted">
-                                       1 mutual friends 
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="action">
-                                <button class="btn btn-primary">
-                                    Accept
-                                </button>
-                                <button class="btn">
-                                    Decline
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    
                 <!--End of Right Section-->
             </div>
         </main>

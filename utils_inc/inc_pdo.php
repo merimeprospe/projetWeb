@@ -1,3 +1,3 @@
 <?php
 
-    $pdo = new PDO('mysql:host=localhost;dbname=contrib', "root", "");
+    $pdo = new PDO('mysql:host=localhost;dbname=minireseausocial', "root", "");

@@ -56,4 +56,20 @@ class PublicationDAO {
         $stmt = $this->pdo->prepare('DELETE FROM Publication WHERE id_pub = :id_pub');
         $stmt->execute(['id_pub' => $id_pub]);
     }
+
+    public function afficherPublicationsGroupe() {
+        $sql = "SELECT * FROM publication WHERE id_groupe = :id_groupe order by created_at DESC";
+        $result = $this->pdo->query($sql);
+    
+        /* if ($result->rowCount() > 0) {
+            while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                echo "ID: " . $row["id_pub"] . " - Titre: " . $row["Titre"] . " - Contenu: " . $row["contenu"] . " - Photo: " . " - ID Utilisateur: " . $row["id_user"] . "<br>";
+                echo '<img src="data:image/jpeg;base64,' . base64_encode($row['photo']) . '" alt="Photo de l\'objet">';
+            }
+        } else {
+            echo "0 résultats";
+        } */
+
+        return $result->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
