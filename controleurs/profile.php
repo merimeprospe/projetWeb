@@ -91,11 +91,11 @@ class ProfilController {
 }
 
 $con = new ProfilController();
-$con->afficherProfil(1);
+$con->afficherProfil($_SESSION['id']);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $profil = new ProfilController();
-    $profil->modifierProfil(1);
+    $profil->modifierProfil($_SESSION['id']);
 }
 
 ob_end_flush(); // Envoie la sortie au navigateur
