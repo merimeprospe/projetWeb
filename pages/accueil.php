@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -8,9 +10,136 @@
         <meta name="description" content="TMF's Social Media">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- My Custom Stylesheet -->
-        <link rel="stylesheet" href="../css/accueil.css">
+        <link rel="stylesheet" href="css/accueil_.css">
         <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
     </head>
+    <style>
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .input{
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .file-input-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .file-input-container input[type="file"] {
+            display: none;
+        }
+        .file-input-container label {
+            background: #0998c1;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .file-input-container span {
+            font-size: 14px;
+            color: #555;
+        }
+        .button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: #0998c1;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background:rgb(210, 232, 243);
+            color: #0998c1;
+            
+        }
+        body {font-family: Arial, Helvetica, sans-serif;}
+
+        /* The Modal (background) */
+        .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        /* Modal Content */
+        .modal-content {
+        z-index: 10px;
+        border-radius: 10px;
+        position: relative;
+        background-color: #fefefe;
+        margin: auto;
+        padding: 0;
+        padding: 4vh;
+        border: 1px solid #888;
+        width: 80%;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+        -webkit-animation-name: animatetop;
+        -webkit-animation-duration: 0.4s;
+        animation-name: animatetop;
+        animation-duration: 0.4s
+        
+        }
+
+        /* Add Animation */
+        @-webkit-keyframes animatetop {
+        from {top:-300px; opacity:0} 
+        to {top:0; opacity:1}
+        }
+
+        @keyframes animatetop {
+        from {top:-300px; opacity:0}
+        to {top:0; opacity:1}
+        }
+
+        /* The Close Button */
+        .close {
+        color: #0998c1;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+        }
+
+        .modal-header {
+        padding: 2px 16px;
+        background-color:rgb(255, 255, 255);
+        color: white;
+        }
+
+        .modal-body {padding: 2px 16px;}
+
+        .modal-footer {
+        padding: 2px 16px;
+        background-color: #5cb85c;
+        color: white;
+        }
+    </style>
     <body>
 
         <!--------Navigation Section---------->
@@ -18,9 +147,9 @@
         <nav>
             <div class="container">
                 <div class="logo">
-                    <img src="assets/TMF FACE smaller.png" style="width: 10%; height: 10%;">
+                    <img src="assets/images/logo.jpg" style="width: 12%; height: 10%;">
                     <h2 class="log">
-                        TMF's Social
+                        Social
                     </h2>
                 </div>
                 <div class="search-bar">
@@ -30,8 +159,10 @@
                 <div class="create">
                     <label class="btn btn-primary" for="create post">Create</label>
                     <div class="profile-photo">
-                        <a href="profile.php">
-                            <img src="assets/profile_img-88x88/profile1-88x88.jpg">
+
+                        <a href="controleurs/profile.php">
+                            <!------<img src="assets/profile_img-88x88/profile1-88x88.jpg">------->
+                            <img src="assets/infos/R.jpeg">
                         </a>
                         
                     </div>
@@ -48,7 +179,7 @@
                     <!--Profile Section-->
                     <a class="profile">
                         <div class="profile-photo">
-                            <img src="./assets/profile_img-88x88/profile1-88x88.jpg" />
+                            <img src="assets/infos/R.jpeg" />
                         </div>
                         <div class="handle">
                             <h4>Ren Lum-Fao</h4>
@@ -64,10 +195,6 @@
                             <span><i class="uil uil-home"></i></span>
                             <h3>Home</h3>
                         </a>
-                        <a class="menu-item">
-                            <span><i class="uil uil-compass"></i></span>
-                            <h3>Explore</h3>
-                        </a>
                         <a class="menu-item" id="notifications">
                             <span><i class="uil uil-bell"><small class="notification-count">9+</small></i></span>
                             <h3>Notification</h3>
@@ -75,7 +202,7 @@
                             <div class="notifications-popup">
                                 <div>
                                     <div class="profile-photo">
-                                        <img src="./assets/profile_img-44x44/profile2-44x44.jpg" />
+                                        <img src="assets/infos/R.jpeg" />
                                     </div>
                                     <div class="notificaion-body">
                                         <b>Tayyab Javed</b> accepted your friend request
@@ -84,7 +211,7 @@
                                 </div>
                                 <div>
                                     <div class="profile-photo">
-                                        <img src="./assets/profile_img-44x44/profile3-44x44.jpg" />
+                                        <img src="assets/infos/R.jpeg" />
                                     </div>
                                     <div class="notificaion-body">
                                         <b>Spider-Man</b> accepted your friend request
@@ -93,7 +220,7 @@
                                 </div>
                                 <div>
                                     <div class="profile-photo">
-                                        <img src="./assets/profile_img-44x44/profile4-44x44.jpg" />
+                                        <img src="assets/infos/R.jpeg" />
                                     </div>
                                     <div class="notificaion-body">
                                         <b>Ferhan Ahmed</b> commendted on your post
@@ -102,7 +229,7 @@
                                 </div>
                                 <div>
                                     <div class="profile-photo">
-                                        <img src="./assets/profile_img-44x44/profile5-44x44.jpg" />
+                                        <img src="assets/infos/R.jpeg "/>
                                     </div>
                                     <div class="notificaion-body">
                                         <b>Frosty</b> and <b>372 others</b> liked your post
@@ -111,7 +238,7 @@
                                 </div>
                                 <div>
                                     <div class="profile-photo">
-                                        <img src="./assets/profile_img-44x44/profile6-44x44.jpg" />
+                                        <img src="assets/infos/R.jpeg "/>
                                     </div>
                                     <div class="notificaion-body">
                                         <b>Sheikhba Mohammed</b> commented on a post that you was tagged in
@@ -120,7 +247,7 @@
                                 </div>
                                 <div>
                                     <div class="profile-photo">
-                                        <img src="./assets/profile_img-44x44/profile7-44x44.jpg" />
+                                        <img src="assets/infos/R.jpeg "/>
                                     </div>
                                     <div class="notificaion-body">
                                         <b>Warm Soda</b> has sent you a friend request
@@ -133,14 +260,6 @@
                         <a class="menu-item" id="messages-notification">
                             <span><i class="uil uil-envelope"><small class="notification-count">6+</small></i></span>
                             <h3>Message</h3>
-                        </a>
-                        <a class="menu-item">
-                            <span><i class="uil uil-bookmark"></i></span>
-                            <h3>Bookmarks</h3>
-                        </a>
-                        <a class="menu-item">
-                            <span><i class="uil uil-chart-line"></i></span>
-                            <h3>Analytics</h3>
                         </a>
                         <a class="menu-item" id="theme">
                             <span><i class="uil uil-palette"></i></span>
@@ -161,20 +280,20 @@
                     <!-- The Create Post Section-->
                     <form class="create-post">
                         <div class="profile-photo">
-                            <img src="assets/profile_img-44x44/profile1-44x44.jpg">
-                        </div>
+                            <img src="assets/infos/R.jpeg ">                       </div>
                         <input type="text" placeholder="What's on your mine?" id="create-post">
-                        <input type="submit" value="Post" class="btn btn-primary">
+                        <!-- Trigger/Open The Modal -->
+                        <input value="Post" class="btn btn-primary" id="myBtn">
                     </form>
                     <!--End Of The Create Post Section-->
                     <!--The Feeds Section-->
                     <div class="feeds">
-                         <!--Feed One-->
+                        <!--Feed One-->
                         <div class="feed">
                             <div class="head">
                                 <div class="user">
                                     <div class="profile-photo">
-                                        <img src="./assets/profile_img-88x88/profile5-88x88.jpg">
+                                        <img src="assets/infos/R.jpeg">
                                     </div>
                                     <div class="ingo">
                                         <h3>Frosty</h3>
@@ -186,8 +305,7 @@
                                 </span>
                             </div>
                             <div class="photo">
-                                <img src="./assets/feed/IMG_20220901_024323.webp">
-                            </div>
+                                <img src="assets/infos/R.jpeg">                       </div>
                             <div class="action-buttons">
                                 <div class="interaction-buttons">
                                     <span><i class="uil uil-heart"></i></span>
@@ -210,129 +328,56 @@
                             </div>
                             <div class="comments text-muted">View All 532 comments</div>
                         </div>
-                        <!--Feed Two-->
-                        <div class="feed">
-                            <div class="head">
-                                <div class="user">
-                                    <div class="profile-photo">
-                                        <img src="./assets/profile_img-88x88/profile2-88x88.jpg">
+                        <?php
+                        foreach($tabRes as $uneLigne) {
+                            ?>
+                            <!--Feed One-->
+                            <div class="feed">
+                                <div class="head">
+                                    <div class="user">
+                                        <div class="profile-photo">
+                                            <img src="assets/infos/R.jpeg">
+                                        </div>
+                                        <div class="ingo">
+                                            <?php echo "  <h3>".$uneLigne["Titre"]."</h3>";?>
+                                            <small><?php echo $uneLigne["Titre"] ?>, <span class="capitalise"><?php echo $uneLigne["created_at"] ?></span></small>
+                                        </div>
                                     </div>
-                                    <div class="ingo">
-                                        <h3>Tayyab Javed</h3>
-                                        <small>Birmingham, United Kingdom, <span class="capitalise">1 day ago</span></small>
+                                    <span class="edit">
+                                        <i class="uil uil-ellipsis-h"></i>
+                                    </span>
+                                </div>
+                                <div class="photo">
+                                    <?php if ($uneLigne['photo']) {
+                                        # code...
+                                        echo '<img src="data:image/jpeg;base64,' . base64_encode($uneLigne['photo']) . '" alt="Photo de l\'objet">';
+                                    }  ?>
+                                </div>
+                                <div class="action-buttons">
+                                    <div class="interaction-buttons">
+                                        <span><i class="uil uil-heart"></i></span>
+                                        <span><i class="uil uil-comment-dots"></i></span>
+                                        <span><i class="uil uil-share-alt"></i></span>
+                                    </div>
+                                    <div class="bookmark">
+                                        <span><i class="uil uil-bookmark-full"></i></span>
                                     </div>
                                 </div>
-                                <span class="edit">
-                                    <i class="uil uil-ellipsis-h"></i>
-                                </span>
-                            </div>
-                            <div class="photo">
-                                <img src="./assets/feed/323795939_563033139008315_7397776276369466911_n.webp">
-                            </div>
-                            <div class="action-buttons">
-                                <div class="interaction-buttons">
-                                    <span><i class="uil uil-heart"></i></span>
-                                    <span><i class="uil uil-comment-dots"></i></span>
-                                    <span><i class="uil uil-share-alt"></i></span>
+                                <div class="liked-by">
+                                    <span><img src="assets/infos/R.jpeg"></span>
+                                    <span><img src="assets/infos/R.jpeg"></span>
+                                    <span><img src="assets/infos/R.jpeg"></span>
+                                    <p>Liked by <b>Spider-Man</b> and <b>7,231 others</b></p>
                                 </div>
-                                <div class="bookmark">
-                                    <span><i class="uil uil-bookmark-full"></i></span>
-                                </div>
-                            </div>
-                            <div class="liked-by">
-                                <span><img src="./assets/profile_img-44x44/profile7-44x44.jpg" ></span>
-                                <span><img src="./assets/profile_img-44x44/profile6-44x44.jpg" ></span>
-                                <span><img src="./assets/profile_img-44x44/profile4-44x44.jpg" ></span>
-                                <p>Liked by <b>Warm Soda</b> and <b>5,317 others</b></p>
-                            </div>
 
-                            <div class="caption">
-                                <p><b>Tayyab Javed</b> Hungry Bubble 🦜 Stole my toast! 😠 <span class="hash-tag">#Parrot</span></p>
-                            </div>
-                            <div class="comments text-muted">View All 532 comments</div>
-                        </div>
-                        <!--Feed Three-->
-                        <div class="feed">
-                            <div class="head">
-                                <div class="user">
-                                    <div class="profile-photo">
-                                        <img src="./assets/profile_img-88x88/Profile4-88x-88.jpg">
-                                    </div>
-                                    <div class="ingo">
-                                        <h3>Ferhan Ahmed</h3>
-                                        <small>Island in Barry, Wales, <span class="capitalise">3 days ago</span></small>
-                                    </div>
+                                <div class="caption">
+                                    <p><b>Frosty</b> <?php echo $uneLigne["contenu"] ?> <span class="hash-tag">#Amazing</span></p>
                                 </div>
-                                <span class="edit">
-                                    <i class="uil uil-ellipsis-h"></i>
-                                </span>
+                                <div class="comments text-muted">View All 532 comments</div>
                             </div>
-                            <div class="photo">
-                                <img src="./assets/feed/20160921_142833.webp">
-                            </div>
-                            <div class="action-buttons">
-                                <div class="interaction-buttons">
-                                    <span><i class="uil uil-heart"></i></span>
-                                    <span><i class="uil uil-comment-dots"></i></span>
-                                    <span><i class="uil uil-share-alt"></i></span>
-                                </div>
-                                <div class="bookmark">
-                                    <span><i class="uil uil-bookmark-full"></i></span>
-                                </div>
-                            </div>
-                            <div class="liked-by">
-                                <span><img src="./assets/profile_img-44x44/profile1-44x44.jpg" ></span>
-                                <span><img src="./assets/profile_img-44x44/profile3-44x44.jpg" ></span>
-                                <span><img src="./assets/profile_img-44x44/profile5-44x44.jpg" ></span>
-                                <p>Liked by <b>Ren Lum-Fao</b> and <b>6,541 others</b></p>
-                            </div>
-
-                            <div class="caption">
-                                <p><b>Ferhan Ahmed</b> Looks at me standing on this rock! <span class="hash-tag">#BarryIsland</span></p>
-                            </div>
-                            <div class="comments text-muted">View All 532 comments</div>
-                        </div>
-                        <!--Feed Four-->
-                        <div class="feed">
-                            <div class="head">
-                                <div class="user">
-                                    <div class="profile-photo">
-                                        <img src="./assets/profile_img-88x88/profile1-88x88.jpg">
-                                    </div>
-                                    <div class="ingo">
-                                        <h3>Ren Lum-Fao</h3>
-                                        <small>Birmingham, United Kingdom, <span class="capitalise">7 days ago</span></small>
-                                    </div>
-                                </div>
-                                <span class="edit">
-                                    <i class="uil uil-ellipsis-h"></i>
-                                </span>
-                            </div>
-                            <div class="photo">
-                                <img src="./assets/feed/20210426_194606.webp">
-                            </div>
-                            <div class="action-buttons">
-                                <div class="interaction-buttons">
-                                    <span><i class="uil uil-heart"></i></span>
-                                    <span><i class="uil uil-comment-dots"></i></span>
-                                    <span><i class="uil uil-share-alt"></i></span>
-                                </div>
-                                <div class="bookmark">
-                                    <span><i class="uil uil-bookmark-full"></i></span>
-                                </div>
-                            </div>
-                            <div class="liked-by">
-                                <span><img src="./assets/profile_img-44x44/profile5-44x44.jpg" ></span>
-                                <span><img src="./assets/profile_img-44x44/profile4-44x44.jpg" ></span>
-                                <span><img src="./assets/profile_img-44x44/profile6-44x44.jpg" ></span>
-                                <p>Liked by <b>Frosty</b> and <b>9,999 others</b></p>
-                            </div>
-
-                            <div class="caption">
-                                <p><b>Frosty</b> Got myself some Mikado's, late night coding anyone? <span class="hash-tag">#Yummy</span> <span class="hash-tag">#Pocky</span></p>
-                            </div>
-                            <div class="comments text-muted">View All 532 comments</div>
-                        </div>
+                            <?php
+                        }
+                    ?>  
                     </div>
                     <!--End of The Feeds Section-->
                 </div>
@@ -527,7 +572,94 @@
                 <!--End of Background Colours Section-->
             </div>
         </div>
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="close">&times;</span>
+                    <div style="    display: flex">
+                        <div class="profile-photo">
+                            <img src="assets/infos/R.jpeg" />
+                        </div>
+                        <div class="handle" style="margin-left: 3vh;">
+                            <h4 style="color:black">Ren Lum-Fao</h4>
+                            <p class="text-muted">
+                                @renlumfao
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div styles="max-width: 600px;
+                                margin: auto;
+                                background: #fff;
+                                padding: 20px;
+                                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                                border-radius: 8px;">
+                        <h2>Formulaire de Publication</h2>
+                        <form action="controleurs/poste.php" method="post" enctype="multipart/form-data">
+                            <label for="titre">Titre :</label>
+                            <input type="text" id="titre" name="titre" required class="input">
+
+                            <label for="contenu">Contenu :</label>
+                            <textarea id="contenu" name="contenu" rows="8" required class="input"></textarea>
+
+                            <div class="file-input-container">
+                                <label for="image">Sélectionner une image</label>
+                                <input type="file" id="image" name="image" accept="image/*" required>
+                                <span id="file-name">Aucune image sélectionnée</span>
+                            </div>
+
+                            <button class="button" type="submit">Publier</button>
+                        </form>
+                    </div>
+                </div>
+                
+            </div>
         
-        <script src="scripts/script.js"></script>
+        </div>
+        
+        <script>
+            const fileInput = document.getElementById('image');
+            const fileName = document.getElementById('file-name');
+
+            fileInput.addEventListener('change', function() {
+                if (fileInput.files.length > 0) {
+                    fileName.textContent = fileInput.files[0].name;
+                } else {
+                    fileName.textContent = 'Aucune image sélectionnée';
+                }
+            });
+        </script>
+        <script>
+            // Get the modal
+            var modal = document.getElementById("myModal");
+
+            // Get the button that opens the modal
+            var btn = document.getElementById("myBtn");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks the button, open the modal 
+            btn.onclick = function() {
+            modal.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+            modal.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+            }
+        </script>
+        <script src="js/script.js"></script>
     </body>
 </html>

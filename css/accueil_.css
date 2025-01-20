@@ -1,31 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;1,700&display=swap');
 
-:root {
-    --primary-colour-hue: 252;
-    --dark-colour-lightness: 17%;
-    --light-colour-lightness: 95%;
-    --white-colour-lightness: 100%;
-
-    --colour-white: hsl(252, 30%, var(--white-colour-lightness));
-    --colour-light: hsl(20.98deg 30% 95%);
-    --colour-gray: hsl(252, 15%, 65%);
-    --colour-primary:#0998c1;
-    --colour-secondary: hsl(252, 100%, 90%);
-    --colour-sucess: hsl(120, 95%, 65%);
-    --colour-danger: hsl(0, 95%, 65%);
-    --colour-dark: hsl(252, 30%, var(--dark-colour-lightness));
-    --colour-black: hsl(252, 30%, 10%);
-
-    --border-radius: 2rem;
-    --card-border-radius: 1rem;
-    --btn-padding: 0.6rem 2rem;
-    --search-padding: 0.6rem 1rem;
-    --card-padding: 1rem;
-
-    --sticky-top-left: 5.4rem;
-    --sticky-top-right: -18rem;
-
-}
 /* width */
 ::-webkit-scrollbar {
     width: 10px;
@@ -48,6 +22,32 @@
     background: hsl(var(--primary-colour-hue), 75%, 50%); 
 }
 
+:root {
+    --primary-colour-hue: 252;
+    --dark-colour-lightness: 17%;
+    --light-colour-lightness: 95%;
+    --white-colour-lightness: 100%;
+
+    --colour-white: hsl(252, 30%, var(--white-colour-lightness));
+    --colour-light: hsl(252, 30%, var(--light-colour-lightness));
+    --colour-gray: hsl(252, 15%, 65%);
+    --colour-primary: #0998c1;
+    --colour-secondary: hsl(252, 100%, 90%);
+    --colour-sucess: hsl(120, 95%, 65%);
+    --colour-danger: hsl(0, 95%, 65%);
+    --colour-dark: hsl(252, 30%, var(--dark-colour-lightness));
+    --colour-black: hsl(252, 30%, 10%);
+
+    --border-radius: 2rem;
+    --card-border-radius: 1rem;
+    --btn-padding: 0.6rem 2rem;
+    --search-padding: 0.6rem 1rem;
+    --card-padding: 1rem;
+
+    --sticky-top-left: 5.4rem;
+    --sticky-top-right: -18rem;
+
+}
 
 *, *::before, *::after {
     padding: 0;

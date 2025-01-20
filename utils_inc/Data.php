@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 class Data {
     // Propriétés
@@ -17,3 +17,4 @@ $utilisateur = new Data();
 $utilisateur->getconnection();
 
 ?>
+ 

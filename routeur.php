@@ -15,9 +15,27 @@
 
 
     if ($_GET["action"]=="accueil"){
-        require "vues/accueil.php";
+        require_once "controleurs/accueil.php";
+        listes();
         exit();
     }
+
+    // Exemple de routeur
+    $action = $_GET['action'] ?? 'accueil';
+
+    switch ($action) {
+        case 'profil':
+            $id_user = $_GET['id'] ?? null;
+            if ($id_user) {
+                $controller = new ProfilController();
+                $controller->afficherProfil($id_user);
+            } else {
+                die("ID utilisateur manquant.");
+            }
+            break;
+        // Autres cas...
+    }
+
 
 
     /* if ($_GET["action"]=="traiterAuthentification"){
