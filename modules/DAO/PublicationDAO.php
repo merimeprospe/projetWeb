@@ -13,8 +13,9 @@ class PublicationDAO {
 
         if ($this->pdo->query($sql) == TRUE) {
             header("Location:../routeur.php?action=accueil");
-        } else {
-            echo "Erreur: " . $sql . "<br>" . $this->conn->error;
+        } 
+        else {
+            echo "Erreur: " . $sql . "<br>" . $this->pdo->error;
         }
     }
  
@@ -54,5 +55,11 @@ class PublicationDAO {
     public function delete($id_pub) {
         $stmt = $this->pdo->prepare('DELETE FROM Publication WHERE id_pub = :id_pub');
         $stmt->execute(['id_pub' => $id_pub]);
+    }
+
+    public function afficherPublicationsByUser($id_user) {
+        $stmt = $this->pdo->prepare('SELECT * FROM publication WHERE id_user = :id_user ORDER BY created_at DESC');
+        $stmt->execute(['id_user' => $id_user]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

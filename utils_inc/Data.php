@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 class Data {
     // Propriétés
@@ -31,8 +31,8 @@ class Data {
 $data = new Data();
 $conn = $data->getConnection();
 
+
 // Tester la connexion (facultatif, pour vérifier)
-// if ($conn) {
-//     echo "Connexion réussie.";
-// }
-?>
+if ($conn) {
+    echo "Connexion réussie.";
+}

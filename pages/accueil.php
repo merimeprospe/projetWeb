@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -34,7 +36,12 @@
                 <div class="create">
                     <label class="btn btn-primary" onclick="rediriger()" for="create post">Create</label>
                     <div class="profile-photo">
-                        <img src="assets/infos/R.jpeg">
+
+                        <a href="controleurs/profile.php">
+                            <!------<img src="assets/profile_img-88x88/profile1-88x88.jpg">------->
+                            <img src="assets/infos/R.jpeg">
+                        </a>
+                        
                     </div>
                 </div>
             </div>

@@ -1,6 +1,8 @@
 <?php
+/* require_once "../utils_inc/Data.php";
+require_once "../modules/Entites/Utilisateur.php";
 
-require_once __DIR__ . '/../Entites/Utilisateur.php';
+require_once __DIR__ . '/../Entites/Utilisateur.php'; */
 
 class UtilisateurDAO {
     private $pdo; // Propriété pour stocker la connexion PDO
@@ -16,21 +18,13 @@ class UtilisateurDAO {
     
 
     public function create(Utilisateur $utilisateur) {
-        $stmt = $this->pdo->prepare('INSERT INTO Utilisateur (nom, prenom, email, password, id_role) VALUES (:nom, :prenom, :email, :password, :id_role)');
-        $stmt->execute([
-            'nom' => $utilisateur->getNom(),
-            'prenom' => $utilisateur->getPrenom(),
-            'email' => $utilisateur->getEmail(),
-            'password' => $utilisateur->getPassword(),
-            'id_role' => $utilisateur->getIdRole()
-        ]);
+
+        $stmt = $this->pdo->prepare('INSERT INTO utilisateur (nom, prenom, email, password, id_role, creer_le, sexe, ville, pays, bio, photo_profil) VALUES (:nom, :prenom, :email, :password, :id_role, :creer_le, :sexe, :ville, :pays, :bio, :photo_profil, :photo_couverture)');
+
+      
     }
 
-    public function read($id_user) {
-        $stmt = $this->pdo->prepare('SELECT * FROM Utilisateur WHERE id_user = :id_user');
-        $stmt->execute(['id_user' => $id_user]);
-        return $stmt->fetchObject('Utilisateur');
-    }
+  
     
     public function readByInitial($initial) {
         $stmt = $this->pdo->prepare('SELECT * FROM Utilisateur WHERE nom LIKE :initial OR prenom LIKE :initial');
@@ -40,20 +34,47 @@ class UtilisateurDAO {
     }
     
 
+  
+
+    public function read($id_user) {
+        $stmt = $this->pdo->prepare('SELECT * FROM utilisateur WHERE id_user = :id_user');
+        $stmt->execute(['id_user' => $id_user]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+        
+    }
+    
+
+
     public function update(Utilisateur $utilisateur) {
-        $stmt = $this->pdo->prepare('UPDATE Utilisateur SET nom = :nom, prenom = :prenom, email = :email, password = :password, id_role = :id_role WHERE id_user = :id_user');
-        $stmt->execute([
+        $stmt = $this->pdo->prepare('
+            UPDATE utilisateur SET
+                nom = :nom,
+                prenom = :prenom,
+                email = :email,
+                sexe = :sexe,
+                ville = :ville,
+                pays = :pays,
+                bio = :bio,
+                photo_profil = :photo_profil,
+                photo_couverture = :photo_couverture
+            WHERE id_user = :id_user
+        ');
+        return $stmt->execute([
             'nom' => $utilisateur->getNom(),
             'prenom' => $utilisateur->getPrenom(),
             'email' => $utilisateur->getEmail(),
-            'password' => $utilisateur->getPassword(),
-            'id_role' => $utilisateur->getIdRole(),
+            'sexe' => $utilisateur->getSexe(),
+            'ville' => $utilisateur->getVille(),
+            'pays' => $utilisateur->getPays(),
+            'bio' => $utilisateur->getBio(),
+            'photo_profil' => $utilisateur->getPhotoProfil(),
+            'photo_couverture' => $utilisateur->getPhotoCouverture(),
             'id_user' => $utilisateur->getIdUser()
         ]);
     }
 
     public function delete($id_user) {
-        $stmt = $this->pdo->prepare('DELETE FROM Utilisateur WHERE id_user = :id_user');
+        $stmt = $this->pdo->prepare('DELETE FROM utilisateur WHERE id_user = :id_user');
         $stmt->execute(['id_user' => $id_user]);
     }
 
@@ -80,9 +101,9 @@ class UtilisateurDAO {
         $_SESSION["id"] = $tabRes[0]["id_user"];
 
         // redirection vers accueil, éventuellement spécifique à l'utilisateur
-        //header("Location:../pages/accueil.php");
         header("Location:../routeur.php?action=accueil");
     }
+
 
 
     public function findAllUsers() {
@@ -208,3 +229,5 @@ class UtilisateurDAO {
     }
 
 }
+
+

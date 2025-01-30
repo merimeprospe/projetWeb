@@ -6,9 +6,9 @@ error_reporting(E_ALL);
 session_start();
 require_once "utils_inc/inc_pdo.php";
 require_once "utils_inc/inc_verifsDroits.php";
-require_once './modules/DAO/UtilisateurDAO.php';
-require_once './controleurs/UserController.php';
-require_once './controleurs/DashboardController.php';
+require_once 'modules/DAO/UtilisateurDAO.php';
+require_once 'controleurs/UserController.php';
+require_once 'controleurs/DashboardController.php';
 
 
 $action = $_GET['action'] ?? 'accueil';
@@ -22,11 +22,25 @@ switch ($action) {
         require_once "controleurs/accueil.php";
         break;
 
+
     case 'traiterAuthentification':
         // Gestion de l'authentification
-        require_once "controleurs/controleurLogin.php";
-        login();
+
+    // Exemple de routeur
+    $action = $_GET['action'] ?? 'accueil';
+
+   
+    case 'profil':
+        $id_user = $_GET['id'] ?? null;
+        if ($id_user) {
+            $controller = new ProfilController();
+            $controller->afficherProfil($id_user);
+        } else {
+            die("ID utilisateur manquant.");
+        }
         break;
+        // Autres cas...
+
 
     case 'toutesContribs':
         // Liste toutes les contributions (exemple)
@@ -46,7 +60,7 @@ switch ($action) {
         } else {
             listerToutesMembre();
         }
-        break;
+        break; 
 
     case 'listUsers':
         // Affiche la liste des utilisateurs
@@ -68,6 +82,7 @@ switch ($action) {
         $response = $userController->updateUser();
         echo json_encode($response);
         exit();
+
 
     case 'searchUsers':
         $userController->searchUsers();
@@ -110,4 +125,5 @@ switch ($action) {
         break;
 }
 
+die("tutépomé ?");
 // Fin du fichier router.php
