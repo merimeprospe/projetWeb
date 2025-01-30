@@ -3,18 +3,36 @@
 class Data {
     // Propriétés
     private $conn;
-    
-    // Constructeur
-    public function getconnection() {
-        $this->conn= new PDO('mysql:host=localhost;dbname=minireseausocial', "root", "");
-        return $this->conn;
-    }
 
+    // Méthode pour obtenir la connexion
+    public function getConnection() {
+        try {
+            // Connexion à la base de données
+            $this->conn = new PDO(
+                'mysql:host=localhost;dbname=minireseausocial', 
+                'root', 
+                ''
+            );
+            
+            // Configuration des options PDO
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            $this->conn->exec("SET NAMES 'utf8'");
+
+            return $this->conn;
+        } catch (PDOException $e) {
+            // En cas d'erreur, afficher un message
+            die("Erreur de connexion : " . $e->getMessage());
+        }
+    }
 }
 
-// Exemple d'utilisation de la classe
-$utilisateur = new Data();
-$utilisateur->getconnection();
+// Exemple d'utilisation
+$data = new Data();
+$conn = $data->getConnection();
 
-?>
- 
+
+// Tester la connexion (facultatif, pour vérifier)
+if ($conn) {
+    echo "Connexion réussie.";
+}

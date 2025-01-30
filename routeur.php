@@ -1,80 +1,129 @@
 <?php
-    session_start();
-    require_once "utils_inc/inc_pdo.php";
-    require_once "utils_inc/inc_verifsDroits.php";
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+session_start();
+require_once "utils_inc/inc_pdo.php";
+require_once "utils_inc/inc_verifsDroits.php";
+require_once 'modules/DAO/UtilisateurDAO.php';
+require_once 'controleurs/UserController.php';
+require_once 'controleurs/DashboardController.php';
 
 
-    // syntaxe attendue : router.php?action=monAction&param1=valeurA&param2=valeurB...
-    
-    // page de connextion : routeur sans action
-    if (!isset($_GET["action"])){
-        // => accueil;
-        require "vues/formCo.php";
-        exit();
-    } 
+$action = $_GET['action'] ?? 'accueil';
+$userController = new UserController($pdo);
+$dashboardController = new DashboardController($pdo);
 
-
-    if ($_GET["action"]=="accueil"){
+// Switch pour gérer les différentes actions
+switch ($action) {
+    case 'accueil':
+        // Page d'accueil
         require_once "controleurs/accueil.php";
-        exit();
-    }
+        break;
+
+
+    case 'traiterAuthentification':
+        // Gestion de l'authentification
 
     // Exemple de routeur
     $action = $_GET['action'] ?? 'accueil';
 
-    switch ($action) {
-        case 'profil':
-            $id_user = $_GET['id'] ?? null;
-            if ($id_user) {
-                $controller = new ProfilController();
-                $controller->afficherProfil($id_user);
-            } else {
-                die("ID utilisateur manquant.");
-            }
-            break;
+   
+    case 'profil':
+        $id_user = $_GET['id'] ?? null;
+        if ($id_user) {
+            $controller = new ProfilController();
+            $controller->afficherProfil($id_user);
+        } else {
+            die("ID utilisateur manquant.");
+        }
+        break;
         // Autres cas...
-    }
 
 
-
-    /* if ($_GET["action"]=="traiterAuthentification"){
-        require_once "controleurs/controleurLogin.php";
-        login();
-        exit(); // inutile ici puisque le login redirige, mais plus tranquilisant à la relecture de ce fichier seul
-    }
-
-
-    if ($_GET["action"]=="toutesContribs"){
+    case 'toutesContribs':
+        // Liste toutes les contributions (exemple)
         require_once "controleurs/controleurContribs.php";
-
-        if (!estConnecte()){
-            header("location:routeur.php"); // => connection
-            exit();
-        }else{
-            listerToutesContribs(); // fonction située dans le controleur, c'est elle qui apelle (inclut) la vue
+        if (!estConnecte()) {
+            header("location:routeur.php"); // Redirection vers la page de connexion
+        } else {
+            listerToutesContribs();
         }
-        //if (!aDroit("admin")) {
-        //    header("location:vues/accueil.php");
-        //    exit();
-       // }
+        break;
 
-        exit();
-    }
-    if ($_GET["action"]=="toutesMembre"){
+    case 'toutesMembre':
+        // Liste tous les membres
         require_once "controleurs/controleurMembre.php";
-
-        if (!estConnecte()){
-            header("location:routeur.php"); // => connection
-            exit();
-        }else{
-            listerToutesMembre(); // fonction située dans le controleur, c'est elle qui apelle (inclut) la vue
+        if (!estConnecte()) {
+            header("location:routeur.php"); // Redirection vers la page de connexion
+        } else {
+            listerToutesMembre();
         }
-        //if (!aDroit("admin")) {
-        //    header("location:vues/accueil.php");
-        //    exit();
-       // }
+        break; 
 
+    case 'listUsers':
+        // Affiche la liste des utilisateurs
+        $userController->listUsers();
+        break;
+
+    case 'suspend':
+        // Suspend un utilisateur
+        $id = $_GET['id_user'] ?? null;
+        if ($id) {
+            $userController->suspendUser($id);
+        } else {
+            echo "ID utilisateur manquant.";
+        }
+        break;
+
+    case 'updateUser':
+        header('Content-Type: application/json');
+        $response = $userController->updateUser();
+        echo json_encode($response);
         exit();
-    }
 
- */    die("tutépomé ?");
+
+    case 'searchUsers':
+        $userController->searchUsers();
+        break;
+
+    case 'deleteUser':
+        $userController->deleteUser();
+        break;
+
+    case 'getRoles':
+        $userController->getRoles();
+        break;
+
+    case 'dashboard':
+        require_once './pages/dashbord.php';
+        break;
+    
+    case 'getDashboardStats':
+        $dashboardController->getDashboardStats();
+        break;
+
+    case 'getOnlineUsers':
+        $dashboardController->getOnlineUsers();
+        break;
+
+    case 'getPublicationsPerDay':
+        $dashboardController->getPublicationsPerDay();
+        break;
+
+    case 'users':
+        require_once './pages/utilisateur.php';
+        break;
+
+    case 'settings':
+        require_once __DIR__ . '/pages/parametres.php';
+        break;
+
+    default:
+        echo "<h1>Erreur 404 - Page non trouvée</h1>";
+        break;
+}
+
+die("tutépomé ?");
+// Fin du fichier router.php

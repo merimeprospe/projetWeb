@@ -1,15 +1,21 @@
 <?php
-require_once "../utils_inc/Data.php";
+/* require_once "../utils_inc/Data.php";
 require_once "../modules/Entites/Utilisateur.php";
 
-require_once "../modules/Entites/Utilisateur.php";
+require_once __DIR__ . '/../Entites/Utilisateur.php'; */
 
 class UtilisateurDAO {
-    private $pdo;
+    private $pdo; // Propriété pour stocker la connexion PDO
 
     public function __construct($pdo) {
-        $this->pdo = $pdo;
+        // Vérification si $pdo est bien un objet PDO
+        if ($pdo instanceof PDO) {
+            $this->pdo = $pdo;
+        } else {
+            throw new InvalidArgumentException("Une instance de PDO est requise.");
+        }
     }
+    
 
     public function create(Utilisateur $utilisateur) {
 
@@ -97,5 +103,131 @@ class UtilisateurDAO {
         // redirection vers accueil, éventuellement spécifique à l'utilisateur
         header("Location:../routeur.php?action=accueil");
     }
+
+
+
+    public function findAllUsers() {
+        // Modifiez la requête SQL pour la table "utilisateur"
+        $sql = "SELECT * FROM utilisateur";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function findUserById($id_user) {
+        $stmt = $this->pdo->prepare("SELECT * FROM utilisateur WHERE id_user = :id_user");
+        $stmt->execute(['id_user' => $id_user]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    // Mettre à jour un utilisateur
+    public function updateUser($data) {
+        $stmt = $this->pdo->prepare("
+            UPDATE utilisateur 
+            SET nom = :nom, prenom = :prenom, email = :email, id_role = :id_role, is_suspended = :is_suspended 
+            WHERE id_user = :id_user
+        ");
+        return $stmt->execute([
+            'nom' => $data['nom'],
+            'prenom' => $data['prenom'],
+            'email' => $data['email'],
+            'id_role' => $data['id_role'],
+            'is_suspended' => $data['is_suspended'],
+            'id_user' => $data['id_user']
+        ]);
+    }
+
+
+     // Méthode pour suspendre un utilisateur
+     public function suspendUser($id_user) {
+        $query = "UPDATE utilisateur SET is_suspended = 1 WHERE id_user = :id_user AND is_suspended = 0"; // Prevent redundant updates
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute([':id_user' => $id_user]);
+
+        if ($stmt->rowCount() > 0) {
+            return true;
+        } else {
+            // Debugging: Check why the row is not being updated
+            $checkUser = $this->pdo->prepare("SELECT is_suspended FROM utilisateur WHERE id_user = :id_user");
+            $checkUser->execute([':id_user' => $id_user]);
+            $user = $checkUser->fetch(PDO::FETCH_ASSOC);
+
+            if (!$user) {
+                error_log("Erreur: Aucun utilisateur trouvé avec ID $id_user");
+                return false;
+            } elseif ($user['is_suspended'] == 1) {
+                error_log("Erreur: L'utilisateur ID $id_user est déjà suspendu.");
+                return false;
+            } else {
+                error_log("Erreur inconnue lors de la suspension de l'utilisateur ID $id_user.");
+                return false;
+            }
+        }
+    }
+
+    // ✅ Rechercher et filtrer les utilisateurs
+    public function searchUsers($query, $role) {
+        $sql = "SELECT * FROM utilisateur WHERE (nom LIKE :query OR prenom LIKE :query OR email LIKE :query)";
+
+        if ($role !== 'all') {
+            $sql .= " AND id_role = :role";
+        }
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':query', "%$query%", PDO::PARAM_STR);
+
+        if ($role !== 'all') {
+            $stmt->bindValue(':role', $role, PDO::PARAM_STR);
+        }
+
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // ✅ Supprimer un utilisateur
+    public function deleteUser($id_user) {
+        try {
+            // 🔍 Supprimer les notifications associées
+            $stmt0 = $this->pdo->prepare("DELETE FROM notification WHERE user_id = :id_user");
+            $stmt0->execute(['id_user' => $id_user]);
+            error_log("Lignes supprimées dans 'notification': " . $stmt0->rowCount());
+
+            // 🔍 Supprimer les relations d’amitié
+            $stmt1 = $this->pdo->prepare("DELETE FROM amies WHERE demandeur = :id_user OR amie = :id_user");
+            $stmt1->execute(['id_user' => $id_user]);
+            error_log("Lignes supprimées dans 'amies': " . $stmt1->rowCount());
+
+            // 🔍 Supprimer l'utilisateur après suppression des références
+            $stmt2 = $this->pdo->prepare("DELETE FROM utilisateur WHERE id_user = :id_user");
+            $stmt2->execute(['id_user' => $id_user]);
+
+
+            if ($stmt2->rowCount() > 0) {
+                echo json_encode(['success' => true]);
+            } else {
+                echo json_encode(['success' => false, 'error' => 'Aucun utilisateur supprimé ou utilisateur introuvable.']);
+            }
+        } catch (Exception $e) {
+            error_log("Erreur lors de la suppression: " . $e->getMessage());
+            echo json_encode(['success' => false, 'error' => 'Erreur SQL: ' . $e->getMessage()]);
+        }
+        exit();
+    }
+
+
+
+
+
+   public function getAllRoles() {
+        try {
+            $stmt = $this->pdo->prepare("SELECT id_role, nom_role FROM role ORDER BY nom_role ASC");
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            return []; // Retourner un tableau vide en cas d'erreur
+        }
+    }
+
 }
-?>
+
+
