@@ -1,11 +1,4 @@
 <?php
-session_start();
-
-require_once "../utils_inc/Data.php";
-require_once "../modules/DAO/UtilisateurDAO.php";
-require_once "../modules/DAO/AmieDAO.php";
-require_once "../modules/Entites/Amie.php";
-
 
 class AmieController {
 
@@ -27,13 +20,13 @@ class AmieController {
         $tabRes = $this->utilisateurDAO->readByInitial($_GET["val"]);
         $amis= $this->amieDAO->findByDemandeurAndAmie($_SESSION['id']);
         
-        require "../pages/amie.php";
+        require "pages/amie.php";
     }
 
     public function control($demandeur, $amie){
         
         $ami = new Amie();
-        $ami= $amieDAO->findByDemandeurAndAmie($demandeur, $amie);
+        $ami= $this->amieDAO->findByDemandeurAndAmie($demandeur, $amie);
         return $ami;
     }
 
@@ -55,6 +48,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-$controller = new AmieController();
-$controller->listes();
-?>

@@ -60,7 +60,7 @@
             <div class="form-container">
                 <img src="https://raw.githubusercontent.com/hicodersofficial/glassmorphism-login-form/master/assets/illustration.png" alt="illustration" class="illustration" />
                 <h1 class="opacity">LOGIN</h1>
-                <form id="formLogin" action="controleurs/login.php" method="post">
+                <form id="formLogin" action="routeur.php?action=login" method="post">
                     <input  name="login" type="text" placeholder="USERNAME" />
                     <input name="pass" type="password" placeholder="PASSWORD" />
                     <button class="opacity" style="color: #fff">SUBMIT</button>

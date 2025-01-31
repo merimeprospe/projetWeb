@@ -1,8 +1,4 @@
 <?php
-session_start();
-
-require_once "../utils_inc/Data.php";
-require_once "../modules/DAO/PublicationDAO.php"; 
 
 class Publication {
     private $conn;
@@ -23,12 +19,3 @@ class Publication {
     }
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $publication = new Publication();
-    $publication->ajouterPublication($_POST['titre'], $_POST['contenu'], $_FILES['image']);
-}
-
-// Pour afficher toutes les publications
-$publication = new Publication();
-$publication->afficherPublications();
-?>

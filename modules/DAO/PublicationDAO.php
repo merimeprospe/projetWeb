@@ -12,7 +12,7 @@ class PublicationDAO {
         $sql = "INSERT INTO publication (titre, contenu, photo, id_user) VALUES ('$titre', '$contenu', '$photo', '1')";
 
         if ($this->pdo->query($sql) == TRUE) {
-            header("Location:../routeur.php?action=accueil");
+            header("Location: routeur.php?action=accueil");
         } 
         else {
             echo "Erreur: " . $sql . "<br>" . $this->pdo->error;

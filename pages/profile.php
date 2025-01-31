@@ -257,8 +257,8 @@ button[type="submit"]:hover {
       <h1><?php echo $utilisateur["nom"] . ' ' . $utilisateur["prenom"]; ?></h1>
         <p class="text-muted"><?php echo $utilisateur["travail"]; ?></p>
         <div class="d-flex justify-content-between align-items-center">
-          <div>
-            <button id="editProfileButton" class="btn btn-secondary">Edit Profile</button>
+          <div id="editProfileButton">
+            <button  class="btn btn-secondary">Edit Profile</button>
           </div>
           <div>
             <span class="badge bg-success">Se déconnecter</span>

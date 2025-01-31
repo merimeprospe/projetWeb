@@ -1,8 +1,5 @@
 <?php
-require_once "../utils_inc/Data.php";
-require_once "../modules/Entites/Utilisateur.php";
 
-require_once "../modules/Entites/Utilisateur.php";
 
 class UtilisateurDAO {
     private $pdo;
@@ -95,7 +92,7 @@ class UtilisateurDAO {
         $_SESSION["id"] = $tabRes[0]["id_user"];
 
         // redirection vers accueil, éventuellement spécifique à l'utilisateur
-        header("Location:../routeur.php?action=accueil");
+        header("Location: routeur.php?action=accueil");
     }
 }
 ?>

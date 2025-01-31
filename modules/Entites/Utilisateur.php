@@ -40,7 +40,7 @@ class Utilisateur {
         $this->password = $password;
         $this->status_connexion = $status_connexion;
         $this->id_role = $id_role;
-        $this->creer_le = $creer_le ?? date('Y-m-d H:i:s');
+        $this->creer_le = isset($creer_le) ? $creer_le : date('Y-m-d H:i:s');
         $this->sexe = $sexe;
         $this->ville = $ville;
         $this->pays = $pays;
