@@ -9,11 +9,13 @@ require_once "utils_inc/inc_verifsDroits.php";
 require_once 'modules/DAO/UtilisateurDAO.php';
 require_once 'controleurs/UserController.php';
 require_once 'controleurs/DashboardController.php';
+require_once 'controleurs/PublicationController.php';
 
 
 $action = $_GET['action'] ?? 'accueil';
 $userController = new UserController($pdo);
 $dashboardController = new DashboardController($pdo);
+$publicationController = new GoodPublicationController($pdo);
 
 // Switch pour gérer les différentes actions
 switch ($action) {
@@ -25,9 +27,7 @@ switch ($action) {
 
     case 'traiterAuthentification':
         // Gestion de l'authentification
-
-    // Exemple de routeur
-    $action = $_GET['action'] ?? 'accueil';
+        $action = $_GET['action'] ?? 'accueil';
 
    
     case 'profil':
@@ -40,27 +40,6 @@ switch ($action) {
         }
         break;
         // Autres cas...
-
-
-    case 'toutesContribs':
-        // Liste toutes les contributions (exemple)
-        require_once "controleurs/controleurContribs.php";
-        if (!estConnecte()) {
-            header("location:routeur.php"); // Redirection vers la page de connexion
-        } else {
-            listerToutesContribs();
-        }
-        break;
-
-    case 'toutesMembre':
-        // Liste tous les membres
-        require_once "controleurs/controleurMembre.php";
-        if (!estConnecte()) {
-            header("location:routeur.php"); // Redirection vers la page de connexion
-        } else {
-            listerToutesMembre();
-        }
-        break; 
 
     case 'listUsers':
         // Affiche la liste des utilisateurs
@@ -112,12 +91,75 @@ switch ($action) {
         $dashboardController->getPublicationsPerDay();
         break;
 
+    case 'getUserActivity':
+        $dashboardController->getUserActivity();
+        break;
+    
+    case 'getEngagementRate':
+        $dashboardController->getEngagementRate();
+        break;
+
+    case 'getActiveGroups':
+        $dashboardController->getActiveGroups();
+        break;
+
+    case 'getDatabaseSize':
+        $dashboardController->getDatabaseSize();
+        break;
+
+    case 'getFailedLogins':
+        $dashboardController->getFailedLogins();
+        break;
+
     case 'users':
         require_once './pages/utilisateur.php';
         break;
 
-    case 'settings':
-        require_once __DIR__ . '/pages/parametres.php';
+    case 'listPublications':
+        $publicationController->listPublications();
+        break;
+
+    case 'blockPublication':
+        $id_pub = $_GET['id_pub'] ?? null;
+        if ($id_pub) {
+            $publicationController->blockPublication($id_pub);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'ID publication manquant']);
+        }
+        break;
+
+    case 'activatePublication':
+        $id_pub = $_GET['id_pub'] ?? null;
+        if ($id_pub) {
+            $publicationController->activatePublication($id_pub);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'ID publication manquant']);
+        }
+        break;
+
+    case 'deletePublication':
+        $id_pub = $_GET['id_pub'] ?? null;
+        if ($id_pub) {
+            $publicationController->deletePublication($id_pub);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'ID publication manquant']);
+        }
+        break;
+
+    case 'getActiveUsers': $dashboardController->getActiveUsers(); break;
+    case 'getSuspendedUsers': $dashboardController->getSuspendedUsers(); break;
+    case 'getNewUsers': $dashboardController->getNewUsers(); break;
+    case 'getRoleDistribution': $dashboardController->getRoleDistribution(); break;
+    case 'getActiveAllGroups': $dashboardController->getActiveAllGroups(); break;
+    case 'getFailedLoginsInfo': $dashboardController->getFailedLoginsInfo(); break;
+
+    case 'getPublicationDetails':
+        $id_pub = $_GET['id_pub'] ?? null;
+        if ($id_pub) {
+            $publicationController->getPublicationDetails($id_pub);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'ID publication manquant']);
+        }
         break;
 
     default:
@@ -125,5 +167,5 @@ switch ($action) {
         break;
 }
 
-die("tutépomé ?");
+// die("tutépomé ?");
 // Fin du fichier router.php

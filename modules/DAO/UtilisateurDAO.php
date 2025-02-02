@@ -91,6 +91,7 @@ class UtilisateurDAO {
 
         if (count($tabRes) != 1) {
             // pas trouvé => retour au formulaire de co
+            $this->logConnexionAttempt(null, 'failed', $login);
             $_SESSION['notification'] = "Votre notification ici!";
             header("Location:../index.php");
             exit();
@@ -99,6 +100,8 @@ class UtilisateurDAO {
         // Si on arrive là : login/pass OK (count==1)
         // Stockage en session : 
         $_SESSION["id"] = $tabRes[0]["id_user"];
+        $this->pdo->prepare("UPDATE utilisateur SET last_login = NOW() WHERE id_user = :id_user")->execute(['id_user' => $tabRes[0]["id_user"]]);
+        $this->logConnexionAttempt($tabRes[0]["id_user"], 'success');
 
         // redirection vers accueil, éventuellement spécifique à l'utilisateur
         header("Location:../routeur.php?action=accueil");
@@ -214,9 +217,20 @@ class UtilisateurDAO {
         exit();
     }
 
-
-
-
+    /**
+ * Fonction pour enregistrer les tentatives de connexion
+ */
+    private function logConnexionAttempt($user_id, $status, $login = null) {
+        $stmt = $this->pdo->prepare("
+            INSERT INTO logs_connexion (user_id, login_attempt, status) 
+            VALUES (:user_id, :login, :status)
+        ");
+        $stmt->execute([
+            'user_id' => $user_id,
+            'login' => $login,
+            'status' => $status
+        ]);
+    }
 
    public function getAllRoles() {
         try {
@@ -229,5 +243,3 @@ class UtilisateurDAO {
     }
 
 }
-
-
