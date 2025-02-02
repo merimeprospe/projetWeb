@@ -101,7 +101,7 @@ class UtilisateurDAO {
         // Stockage en session : 
         $_SESSION["id"] = $tabRes[0]["id_user"];
         $this->pdo->prepare("UPDATE utilisateur SET last_login = NOW() WHERE id_user = :id_user")->execute(['id_user' => $tabRes[0]["id_user"]]);
-        $this->logConnexionAttempt($tabRes[0]["id_user"], 'success');
+        $this->logConnexionAttempt($tabRes[0]["id_user"], 'success',$login);
 
         // redirection vers accueil, éventuellement spécifique à l'utilisateur
         header("Location:../routeur.php?action=accueil");
