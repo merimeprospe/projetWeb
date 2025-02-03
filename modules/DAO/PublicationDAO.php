@@ -9,7 +9,8 @@ class PublicationDAO {
 
     public function create($titre, $contenu, $image) {
         $photo = addslashes(file_get_contents($image['tmp_name']));
-        $sql = "INSERT INTO publication (titre, contenu, photo, id_user) VALUES ('$titre', '$contenu', '$photo', '1')";
+        $user = $_SESSION['id'];
+        $sql = "INSERT INTO publication (titre, contenu, photo, id_user) VALUES ('$titre', '$contenu', '$photo', '$user')";
 
         if ($this->pdo->query($sql) == TRUE) {
             header("Location: routeur.php?action=accueil");
@@ -27,7 +28,10 @@ class PublicationDAO {
     }
 
     public function afficherPublications() {
-        $sql = "SELECT * FROM publication order by created_at DESC";
+        $sql = "SELECT publication.*, utilisateur.*
+                FROM publication
+                JOIN utilisateur ON publication.id_user = utilisateur.id_user
+                order by created_at DESC";
         $result = $this->pdo->query($sql);
     
         /* if ($result->rowCount() > 0) {
@@ -38,8 +42,7 @@ class PublicationDAO {
         } else {
             echo "0 résultats";
         } */
-
-        return $result->fetchAll(PDO::FETCH_ASSOC);
+        return $result->fetchAll(PDO::FETCH_CLASS);
     }
 
     public function update(Publication $publication) {

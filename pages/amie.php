@@ -150,7 +150,7 @@
                 <input type="search" placeholder="Search for inspiration and projects..." id="search">
             </div>
             <div class="create">
-                <label class="btn btn-primary" for="create post" onclick="search()">Create</label>
+                <label class="btn btn-primary" for="create post" onclick="search()">?</label>
                 <div class="profile-photo">
                     <img src="assets/infos/R.jpeg">
                 </div>

@@ -12,10 +12,10 @@
         <!-- My Custom Stylesheet -->
         <link rel="stylesheet" href="css/accueil_.css">
         <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
+        <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
     </head>
-    <style>
-        
-    </style>
+   
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <body>
 
@@ -35,7 +35,7 @@
                     <input type="search" placeholder="Search for inspiration and projects..." id="search">
                 </div>
                 <div class="create">
-                    <label class="btn btn-primary" onclick="rediriger()" for="create post">Create</label>
+                    <label class="btn btn-primary" onclick="rediriger()" for="create post">?</label>
                     <div class="profile-photo">
 
                         <a href="controleurs/profile.php">
@@ -43,7 +43,9 @@
                             <?php if ($utilisateur['photo_profil']) {
                                 # code...
                                 echo '<img src="data:image/jpeg;base64,' . base64_encode($utilisateur['photo_profil']) . '" alt="Photo de l\'objet" class="profile-picture"> ';
-                            }  ?>
+                            }else {?>
+                                <img src="assets/infos/1.png" />
+                           <?php }  ?>
                         </a>
                         
                     </div>
@@ -63,12 +65,16 @@
                            <?php if ($utilisateur['photo_profil']) {
                             # code...
                             echo '<img src="data:image/jpeg;base64,' . base64_encode($utilisateur['photo_profil']) . '" alt="Photo de l\'objet" class="profile-picture"> ';
-                        }  ?>
+                        } else {?>
+                            <img src="assets/infos/1.png" />
+                       <?php }  ?>
                         </div>
                         <div class="handle">
                             <h4><?php echo $utilisateur["nom"] . ' ' . $utilisateur["prenom"]; ?></h4>
                             <p class="text-muted">
-                                @<?php echo $utilisateur["nom"] ?>
+                                @<?php if ($utilisateur['nom']){echo $utilisateur["nom"];}else {
+                                   echo $utilisateur["email"] ;
+                                } ?>
                             </p>
                         </div>
                     </a>
@@ -89,10 +95,15 @@
                                     ?>
                                     <div style= "display: flex;gap: 10px; margin:10px">
                                         <div class="profile-photo">
-                                            <img src="assets/infos/R.jpeg" />
+                                        <?php if ($uneLigne->photo_profil) {
+                                                # code...
+                                                echo '<img src="data:image/jpeg;base64,' . base64_encode($uneLigne->photo_profil) . '" alt="Photo de l\'objet" class="profile-picture"> ';
+                                            }  else {?>
+                                                <img src="assets/infos/1.png" />
+                                        <?php }  ?> 
                                         </div>
                                         <div class="notificaion-body" style="margin-top: 10px;">
-                                            <b> <?php echo $uneLigne->getSendUser() ?></b> <?php echo $uneLigne->getMessage() ?>
+                                            <b> <?php echo $uneLigne->nom ?></b> <?php echo $uneLigne->message ?>
                                             <small class="text-muted">Now</small>
                                         </div>
                                     </div>
@@ -108,9 +119,9 @@
                             <span><i class="uil uil-palette"></i></span>
                             <h3>Theme</h3>
                         </a>
-                        <a class="menu-item">
-                            <span><i class="uil uil-setting"></i></span>
-                            <h3>Settings</h3>
+                        <a class="menu-item" onclick="Logout()">
+                            <span><i class="uil uil-signout"></i></span>
+                            <h3>Logout</h3>
                         </a>    
                     </div>
                     <!--End Of Sidebar Section-->
@@ -126,7 +137,9 @@
                         <?php if ($utilisateur['photo_profil']) {
                         # code...
                         echo '<img src="data:image/jpeg;base64,' . base64_encode($utilisateur['photo_profil']) . '" alt="Photo de l\'objet" class="profile-picture"> ';
-                    }  ?>                       </div>
+                    }  else {?>
+                        <img src="assets/infos/1.png" />
+                   <?php }  ?>                     </div>
                         <input type="text" placeholder="What's on your mine?" id="create-post">
                         <!-- Trigger/Open The Modal -->
                         <input value="Post" class="btn btn-primary" id="myBtn">
@@ -143,11 +156,16 @@
                                 <div class="head">
                                     <div class="user">
                                         <div class="profile-photo">
-                                            <img src="assets/infos/R.jpeg">
+                                        <?php if ($uneLigne->photo_profil) {
+                                                # code...
+                                                echo '<img src="data:image/jpeg;base64,' . base64_encode($uneLigne->photo_profil) . '" alt="Photo de l\'objet" class="profile-picture"> ';
+                                            }  else {?>
+                                                <img src="assets/infos/1.png" />
+                                        <?php }  ?> 
                                         </div>
                                         <div class="ingo">
-                                            <?php echo "  <h3>".$uneLigne["Titre"]."</h3>";?>
-                                            <small><?php echo $uneLigne["Titre"] ?>, <span class="capitalise"><?php echo $uneLigne["created_at"] ?></span></small>
+                                            <?php echo "  <h3>".$uneLigne->Titre."</h3>";?>
+                                            <small><?php echo $uneLigne->nom ?>, <span class="capitalise"><?php echo $uneLigne->created_at ?></span></small>
                                         </div>
                                     </div>
                                     <span class="edit">
@@ -155,9 +173,9 @@
                                     </span>
                                 </div>
                                 <div class="photo">
-                                    <?php if ($uneLigne['photo']) {
+                                    <?php if ($uneLigne->photo) {
                                         # code...
-                                        echo '<img src="data:image/jpeg;base64,' . base64_encode($uneLigne['photo']) . '" alt="Photo de l\'objet">';
+                                        echo '<img src="data:image/jpeg;base64,' . base64_encode($uneLigne->photo) . '" alt="Photo de l\'objet">';
                                     }  ?>
                                 </div>
                                 <div class="action-buttons">
@@ -178,7 +196,7 @@
                                 </div>
 
                                 <div class="caption">
-                                    <p><b>Frosty</b> <?php echo $uneLigne["contenu"] ?> <span class="hash-tag">#Amazing</span></p>
+                                    <p><b>Frosty</b> <?php echo $uneLigne->contenu ?> <span class="hash-tag">#Amazing</span></p>
                                 </div>
                                 <div class="comments text-muted">View All 532 comments</div>
                             </div>
@@ -265,11 +283,17 @@
                             <div class="request" id="<?php echo 'btn' . $uneLigne->id ?>">
                                 <div class="info">
                                     <div class="profile-photo">
-                                        <img src="assets/infos/R.jpeg">
+                                    <?php if ($uneLigne->photo_profil) {
+                                            # code...
+                                            echo '<img src="data:image/jpeg;base64,' . base64_encode($uneLigne->photo_profil) . '" alt="Photo de l\'objet" class="profile-picture"> ';
+                                        }  else {?>
+                                            <img src="assets/infos/1.png" />
+                                    <?php }  ?> 
                                     </div>
                                     <div>
-                                        <h5><?php echo $uneLigne->amie ?></h5>
+                                        <h5><?php echo $uneLigne->nom ?></h5>
                                         <p class="text-muted" style="font-size: 13px;">
+                                        vous a envoyé une demande le
                                          <?php echo $uneLigne->date ?>
                                         </p>
                                     </div>
@@ -354,12 +378,17 @@
                     <span class="close">&times;</span>
                     <div style="    display: flex">
                         <div class="profile-photo">
-                            <img src="assets/infos/R.jpeg" />
+                        <?php if ($utilisateur['photo_profil']) {
+                        # code...
+                        echo '<img src="data:image/jpeg;base64,' . base64_encode($utilisateur['photo_profil']) . '" alt="Photo de l\'objet" class="profile-picture"> ';
+                    }  else {?>
+                        <img src="assets/infos/1.png" />
+                   <?php }  ?> 
                         </div>
                         <div class="handle" style="margin-left: 3vh;">
-                            <h4 style="color:black">Ren Lum-Fao</h4>
+                        <h4><?php echo $utilisateur["nom"] . ' ' . $utilisateur["prenom"]; ?></h4>
                             <p class="text-muted">
-                                @renlumfao
+                                @<?php echo $utilisateur["email"] ?>
                             </p>
                         </div>
                     </div>
@@ -384,6 +413,7 @@
                                 <input type="file" id="image" name="image" accept="image/*" required>
                                 <span id="file-name">Aucune image sélectionnée</span>
                             </div>
+                            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>" />
 
                             <button class="button" type="submit">Publier</button>
                         </form>
@@ -457,6 +487,9 @@
                    //window.location.href = "controleurs/amie.php?val="+document.getElementById("search").value;
                 }
                 
+            }
+            function Logout() { 
+                window.location.href = "routeur.php?action=Logout";
             }
         </script>
         <script src="js/script.js"></script>

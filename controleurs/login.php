@@ -15,6 +15,11 @@ class AuthController {
       
         return $this->user->authenticate($login, $pass);
     }
+    public function register($login, $pass) {
+        // Appel de la méthode authenticate de l'objet UtilisateurDAO
+      
+        return $this->user->create1($login, $pass);
+    }
 }
 
 // Utilisation de la classe

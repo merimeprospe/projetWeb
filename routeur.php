@@ -1,145 +1,165 @@
 <?php
-    session_start();
-    require_once "utils_inc/inc_verifsDroits.php";
-    require_once "utils_inc/Data.php";
-    require_once "modules/DAO/UtilisateurDAO.php";
-    require_once "modules/DAO/AmieDAO.php";
-    require_once "modules/Entites/Amie.php";
-    require_once "modules/DAO/PublicationDAO.php";
-    require_once "modules/DAO/NotificationDAO.php";
-    require_once "modules/Entites/Notification.php";
 
+session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-    // syntaxe attendue : router.php?action=monAction&param1=valeurA&param2=valeurB...
-    
-    // page de connextion : routeur sans action
-    if (!isset($_GET["action"])){
-        // => accueil;
-        require "vues/formCo.php";
+require_once "utils_inc/inc_verifsDroits.php";
+require_once "utils_inc/Data.php";
+require_once "modules/DAO/UtilisateurDAO.php";
+require_once "modules/DAO/AmieDAO.php";
+require_once "modules/Entites/Amie.php";
+require_once "modules/DAO/PublicationDAO.php";
+require_once "modules/DAO/NotificationDAO.php";
+require_once "modules/Entites/Notification.php";
+require_once 'controleurs/UserController.php';
+require_once 'controleurs/DashboardController.php';
+
+$action = isset($_GET['action']) ? $_GET['action'] : 'accueil';
+$userController = new UserController();
+$dashboardController = new DashboardController();
+
+if (!isset($_SESSION["id"])) {
+    if ($_GET["action"]!="login" && $_GET["action"]!="register" ){   
+        header("Location: index.php");
         exit();
-    } 
-
-    if ($_GET["action"]=="login"){
+    }
+}
+switch ($action) {
+    case 'login':
         require_once "controleurs/login.php";
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+                die('Invalid CSRF token');
+            }
             $login = $_POST["login"];
             $pass = $_POST["pass"];
             $authController = new AuthController();
             $authController->authenticate($login, $pass);
         }
         exit();
-    }
-    if ($_GET["action"]=="poste"){
+
+    case 'register':
+        require_once "controleurs/login.php";
+        if (!isset($_GET['token']) || $_GET['token'] !== $_SESSION['csrf_token']) {
+            die('Invalid CSRF token');
+        }
+        $login = $_GET["login"];
+        $pass = $_GET["pass"];
+        $authController = new AuthController();
+        $authController->register($login, $pass);
+        exit();
+
+    case 'poste':
         require_once "controleurs/poste.php";
-        
+       
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+                die('Invalid CSRF token');
+            }
             $publication = new Publication();
             $publication->ajouterPublication($_POST['titre'], $_POST['contenu'], $_FILES['image']);
         }
-
         exit();
-    }
 
-    if ($_GET["action"]=="accueil"){
+    case 'accueil':
         require_once "controleurs/accueil.php";
-        // Exemple d'utilisation de la classe
         $controller = new PublicationController();
         $controller->listes();
         exit();
-    }
 
-    if ($_GET["action"]=="amie"){
+    case 'amie':
         require_once "controleurs/amie.php";
         $controller = new AmieController();
         $controller->listes();
         exit();
-    }
-    
-    if ($_GET["action"]=="deletid"){
+
+    case 'deletid':
+    case 'deletuser':
+    case 'Accepter':
+    case 'ajouter':
         require_once "controleurs/deletAmie.php";
         $routeur = new Routeur();
         $routeur->handleRequest();
         exit();
-    }
 
-    if ($_GET["action"]=="deletuser"){
-        require_once "controleurs/deletAmie.php";
-        $routeur = new Routeur();
-        $routeur->handleRequest();
-        exit();
-    }
-    
-    if ($_GET["action"]=="Accepter"){
-        require_once "controleurs/deletAmie.php";
-        $routeur = new Routeur();
-        $routeur->handleRequest();
-        exit();
-    }
-
-        
-    if ($_GET["action"]=="ajouter"){
-        require_once "controleurs/deletAmie.php";
-        $routeur = new Routeur();
-        $routeur->handleRequest();
-        exit();
-    }
-
-    // Exemple de routeur
-   // $action = $_GET['action'] ?? 'accueil';
-
-    switch ($action) {
-        case 'profil':
-            $id_user = $_GET['id'];
-            if ($id_user) {
-                $controller = new ProfilController();
-                $controller->afficherProfil($id_user);
-            } else {
-                die("ID utilisateur manquant.");
-            }
-            break;
-        // Autres cas...
-    }
-
-
-
-    /* if ($_GET["action"]=="traiterAuthentification"){
-        require_once "controleurs/controleurLogin.php";
-        login();
-        exit(); // inutile ici puisque le login redirige, mais plus tranquilisant à la relecture de ce fichier seul
-    }
-
-
-    if ($_GET["action"]=="toutesContribs"){
-        require_once "controleurs/controleurContribs.php";
-
-        if (!estConnecte()){
-            header("location:routeur.php"); // => connection
-            exit();
-        }else{
-            listerToutesContribs(); // fonction située dans le controleur, c'est elle qui apelle (inclut) la vue
+    case 'profil':
+        $id_user = isset($_GET['id']) ? $_GET['id'] : null;
+        if ($id_user) {
+            $controller = new ProfilController();
+            $controller->afficherProfil($id_user);
+        } else {
+            die("ID utilisateur manquant.");
         }
-        //if (!aDroit("admin")) {
-        //    header("location:vues/accueil.php");
-        //    exit();
-       // }
+        break;
 
-        exit();
-    }
-    if ($_GET["action"]=="toutesMembre"){
-        require_once "controleurs/controleurMembre.php";
+    case 'Logout':
+        // Liste toutes les contributions (exemple)
+        session_destroy();
+        require_once "index.php";
+        break;
 
-        if (!estConnecte()){
-            header("location:routeur.php"); // => connection
-            exit();
-        }else{
-            listerToutesMembre(); // fonction située dans le controleur, c'est elle qui apelle (inclut) la vue
+    case 'listUsers':
+        // Affiche la liste des utilisateurs
+        $userController->listUsers();
+        break;
+
+    case 'suspend':
+        // Suspend un utilisateur
+        $id = $_GET['id_user'];
+        if ($id) {
+            $userController->suspendUser($id);
+        } else {
+            echo "ID utilisateur manquant.";
         }
-        //if (!aDroit("admin")) {
-        //    header("location:vues/accueil.php");
-        //    exit();
-       // }
+        break;
 
+    case 'updateUser':
+        header('Content-Type: application/json');
+        $response = $userController->updateUser();
+        echo json_encode($response);
         exit();
-    }
 
- */    die("tutépomé ?");
+
+    case 'searchUsers':
+        $userController->searchUsers();
+        break;
+
+    case 'deleteUser':
+        $userController->deleteUser();
+        break;
+
+    case 'getRoles':
+        $userController->getRoles();
+        break;
+
+    case 'dashboard':
+        require_once './pages/dashbord.php';
+        break;
+    
+    case 'getDashboardStats':
+        $dashboardController->getDashboardStats();
+        break;
+
+    case 'getOnlineUsers':
+        $dashboardController->getOnlineUsers();
+        break;
+
+    case 'getPublicationsPerDay':
+        $dashboardController->getPublicationsPerDay();
+        break;
+
+    case 'users':
+        require_once './pages/utilisateur.php';
+        break;
+
+    case 'settings':
+        require_once __DIR__ . '/pages/parametres.php';
+        break;
+
+    default:
+        echo "<h1>Erreur 404 - Page non trouvée</h1>";
+        break;
+
+}

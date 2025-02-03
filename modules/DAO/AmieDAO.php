@@ -62,7 +62,10 @@ class AmieDAO {
     }
 
     public function findAlldemande($id) {
-        $stmt = $this->pdo->prepare('SELECT * FROM amies WHERE amie = :id');
+        $stmt = $this->pdo->prepare('SELECT amies.*, utilisateur.*
+                                    FROM amies
+                                    JOIN utilisateur ON amies.demandeur = utilisateur.id_user
+                                    WHERE amies.amie = :id');
         $stmt->execute(['id' => $id]);
         return $stmt->fetchAll(PDO::FETCH_CLASS);
     }

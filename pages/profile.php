@@ -260,8 +260,8 @@ button[type="submit"]:hover {
           <div id="editProfileButton">
             <button  class="btn btn-secondary">Edit Profile</button>
           </div>
-          <div>
-            <span class="badge bg-success">Se déconnecter</span>
+          <div onclick="Logout()" style="cursor: pointer;">
+            <span class="badge bg-success" style="cursor: pointer;">Se déconnecter</span>
           </div>
         </div>
       </div>
@@ -474,6 +474,11 @@ button[type="submit"]:hover {
 
 
 <script>
+    function Logout() { 
+      console.log("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+      
+                window.location.href = "../routeur.php?action=Logout";
+            }
     // Récupérer les éléments du DOM
     const editProfileButton = document.getElementById('editProfileButton'); // Bouton "Edit Profile"
     const closePopupButton = document.getElementById('closePopup'); // Bouton pour fermer la popup
