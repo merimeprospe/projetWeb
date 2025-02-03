@@ -50,6 +50,8 @@ if (!isset($users) || !is_array($users)) {
 
     .table {
         width: 100%;
+        border-radius: 10px;
+        overflow: hidden;
     }
 
     .table thead {
@@ -69,6 +71,11 @@ if (!isset($users) || !is_array($users)) {
         background-color: #0998c1;
         border-color: #0998c1;
     }
+
+    .bg-primary {
+        background-color: #0998c1 !important;
+        border-color: #0998c1 !important;
+    }
     </style>
 </head>
 
@@ -85,9 +92,16 @@ if (!isset($users) || !is_array($users)) {
                         <li class="nav-item"><a class="nav-link text-white" href="routeur.php?action=listUsers">Gestion
                                 des Utilisateurs</a></li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="routeur.php?action=Logout">
+
+                           
+
+                            <a href="routeur.php?action=listPublications" class="nav-link text-white">Gestion des
+                                Publications</a>
+
+                                <a class="nav-link text-white" href="routeur.php?action=Logout">
                                 <i class="uil uil-signout"></i> Logout
                             </a>
+
                         </li>
                     </ul>
                 </div>

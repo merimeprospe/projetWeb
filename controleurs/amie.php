@@ -17,6 +17,7 @@ class AmieController {
        // $tabRes = $this->publicationDAO->afficherPublications();
 
         // Inclusion de la vue
+        $utilisateur = $this->utilisateurDAO->read($_SESSION['id']);
         $tabRes = $this->utilisateurDAO->readByInitial($_GET["val"]);
         $amis= $this->amieDAO->findByDemandeurAndAmie($_SESSION['id']);
         

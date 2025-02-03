@@ -22,6 +22,4 @@ class AuthController {
     }
 }
 
-// Utilisation de la classe
-
 

@@ -42,4 +42,63 @@ class DashboardController {
             'data' => $this->dashboardDAO->getPublicationsPerDay()
         ]);
     }
+
+    public function getUserActivity() {
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode([
+            'success' => true,
+            'data' => $this->dashboardDAO->getUserActivityStats()
+        ]);
+        exit();
+    }
+
+    public function getEngagementRate() {
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode([
+            'success' => true,
+            'data' => $this->dashboardDAO->getEngagementRate()
+        ]);
+        exit();
+    }
+
+    public function getActiveGroups() {
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode([
+            'success' => true,
+            'data' => $this->dashboardDAO->getActiveGroups()
+        ]);
+        exit();
+    }
+
+    public function getDatabaseSize() {
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode([
+            'success' => true,
+            'data' => $this->dashboardDAO->getDatabaseSize()
+        ]);
+        exit();
+    }
+
+    public function getFailedLogins() {
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode([
+            'success' => true,
+            'data' => $this->dashboardDAO->getFailedLogins()
+        ]);
+        exit();
+    }
+
+    private function sendJsonResponse($data) {
+        header('Content-Type: application/json');
+        echo json_encode(['success' => true, 'data' => $data]);
+        exit();
+    }
+
+    public function getActiveUsers(){ $this->sendJsonResponse($this->dashboardDAO->getActiveUsers()); }
+    public function getSuspendedUsers() { $this->sendJsonResponse($this->dashboardDAO->getSuspendedUsers()); }
+    public function getNewUsers() { $this->sendJsonResponse($this->dashboardDAO->getNewUsers()); }
+    public function getRoleDistribution() { $this->sendJsonResponse($this->dashboardDAO->getRoleDistribution()); }
+    public function getActiveAllGroups() { $this->sendJsonResponse($this->dashboardDAO->getActiveAllGroups()); }
+    public function getFailedLoginsInfo() { $this->sendJsonResponse($this->dashboardDAO->getFailedLoginsInfo()); }
+
 }

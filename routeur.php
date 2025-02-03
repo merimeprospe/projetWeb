@@ -15,10 +15,12 @@ require_once "modules/DAO/NotificationDAO.php";
 require_once "modules/Entites/Notification.php";
 require_once 'controleurs/UserController.php';
 require_once 'controleurs/DashboardController.php';
+require_once 'controleurs/PublicationController.php';
 
 $action = isset($_GET['action']) ? $_GET['action'] : 'accueil';
 $userController = new UserController();
 $dashboardController = new DashboardController();
+$publicationController = new GoodPublicationController();
 
 if (!isset($_SESSION["id"])) {
     if ($_GET["action"]!="login" && $_GET["action"]!="register" ){   
@@ -26,6 +28,7 @@ if (!isset($_SESSION["id"])) {
         exit();
     }
 }
+
 switch ($action) {
     case 'login':
         require_once "controleurs/login.php";
@@ -75,6 +78,7 @@ switch ($action) {
         $controller->listes();
         exit();
 
+
     case 'deletid':
     case 'deletuser':
     case 'Accepter':
@@ -83,6 +87,7 @@ switch ($action) {
         $routeur = new Routeur();
         $routeur->handleRequest();
         exit();
+
 
     case 'profil':
         $id_user = isset($_GET['id']) ? $_GET['id'] : null;
@@ -150,16 +155,80 @@ switch ($action) {
         $dashboardController->getPublicationsPerDay();
         break;
 
+    case 'getUserActivity':
+        $dashboardController->getUserActivity();
+        break;
+    
+    case 'getEngagementRate':
+        $dashboardController->getEngagementRate();
+        break;
+
+    case 'getActiveGroups':
+        $dashboardController->getActiveGroups();
+        break;
+
+    case 'getDatabaseSize':
+        $dashboardController->getDatabaseSize();
+        break;
+
+    case 'getFailedLogins':
+        $dashboardController->getFailedLogins();
+        break;
+
     case 'users':
         require_once './pages/utilisateur.php';
         break;
 
-    case 'settings':
-        require_once __DIR__ . '/pages/parametres.php';
+    case 'listPublications':
+        $publicationController->listPublications();
+        break;
+
+    case 'blockPublication':
+        $id_pub = $_GET['id_pub'] ;
+        if ($id_pub) {
+            $publicationController->blockPublication($id_pub);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'ID publication manquant']);
+        }
+        break;
+
+    case 'activatePublication':
+        $id_pub = $_GET['id_pub'] ;
+        if ($id_pub) {
+            $publicationController->activatePublication($id_pub);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'ID publication manquant']);
+        }
+        break;
+
+    case 'deletePublication':
+        $id_pub = $_GET['id_pub'];
+        if ($id_pub) {
+            $publicationController->deletePublication($id_pub);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'ID publication manquant']);
+        }
+        break;
+
+    case 'getActiveUsers': $dashboardController->getActiveUsers(); break;
+    case 'getSuspendedUsers': $dashboardController->getSuspendedUsers(); break;
+    case 'getNewUsers': $dashboardController->getNewUsers(); break;
+    case 'getRoleDistribution': $dashboardController->getRoleDistribution(); break;
+    case 'getActiveAllGroups': $dashboardController->getActiveAllGroups(); break;
+    case 'getFailedLoginsInfo': $dashboardController->getFailedLoginsInfo(); break;
+
+    case 'getPublicationDetails':
+        $id_pub = $_GET['id_pub'] ;
+        if ($id_pub) {
+            $publicationController->getPublicationDetails($id_pub);
+        } else {
+            echo json_encode(['success' => false, 'error' => 'ID publication manquant']);
+        }
         break;
 
     default:
         echo "<h1>Erreur 404 - Page non trouvée</h1>";
         break;
+
 
 }

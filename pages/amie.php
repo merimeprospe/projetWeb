@@ -152,7 +152,12 @@
             <div class="create">
                 <label class="btn btn-primary" for="create post" onclick="search()">?</label>
                 <div class="profile-photo">
-                    <img src="assets/infos/R.jpeg">
+                <?php if ($utilisateur['photo_profil']) {
+                            # code...
+                            echo '<img src="data:image/jpeg;base64,' . base64_encode($utilisateur['photo_profil']) . '" alt="Photo de l\'objet" class="profile-picture"> ';
+                        } else {?>
+                            <img src="assets/infos/1.png" />
+                       <?php }  ?>
                 </div>
             </div>
         </div>
