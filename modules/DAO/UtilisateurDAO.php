@@ -1,45 +1,72 @@
 <?php
-require_once "../utils_inc/Data.php";
+/*require_once "../utils_inc/Data.php";
 require_once "../modules/Entites/Utilisateur.php";
 
-require_once "../modules/Entites/Utilisateur.php";
+require_once "../modules/Entites/Utilisateur.php";*/
 
-class UtilisateurDAO {
+class UtilisateurDAO
+{
     private $pdo;
 
-    public function __construct($pdo) {
+    public function __construct($pdo)
+    {
         $this->pdo = $pdo;
     }
 
-    public function create(Utilisateur $utilisateur) {
+    public function create(Utilisateur $utilisateur)
+    {
 
         $stmt = $this->pdo->prepare('INSERT INTO utilisateur (nom, prenom, email, password, id_role, creer_le, sexe, ville, pays, bio, photo_profil) VALUES (:nom, :prenom, :email, :password, :id_role, :creer_le, :sexe, :ville, :pays, :bio, :photo_profil, :photo_couverture)');
-
-      
     }
 
-  
-    
-    public function readByInitial($initial) {
+
+
+    public function readByInitial($initial)
+    {
         $stmt = $this->pdo->prepare('SELECT * FROM Utilisateur WHERE nom LIKE :initial OR prenom LIKE :initial');
         $likeInitial = $initial . '%';
         $stmt->execute(['initial' => $likeInitial]);
         return $stmt->fetchAll(PDO::FETCH_CLASS);
     }
-    
 
-  
 
-    public function read($id_user) {
+
+
+    /*public function read($id_user)
+    {
         $stmt = $this->pdo->prepare('SELECT * FROM utilisateur WHERE id_user = :id_user');
         $stmt->execute(['id_user' => $id_user]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
-        
+    }*/
+
+    public function read($id_user)
+    {
+        $stmt = $this->pdo->prepare('SELECT 
+            id_user, 
+            COALESCE(nom, "") AS nom, 
+            COALESCE(prenom, "") AS prenom,
+            COALESCE(email, "") AS email,
+            COALESCE(sexe, "Non spécifié") AS sexe,
+            COALESCE(ville, "") AS ville,
+            COALESCE(pays, "") AS pays,
+            COALESCE(bio, "") AS bio,
+            COALESCE(travail, "") AS travail,
+            COALESCE(loisirs, "") AS loisirs,
+            COALESCE(creer_le, "") AS creer_le,
+            photo_profil,
+            photo_couverture
+            FROM utilisateur 
+            WHERE id_user = :id_user');
+        $stmt->execute(['id_user' => $id_user]);
+        return $stmt->fetch(PDO::FETCH_ASSOC); // Retourne toujours un tableau
     }
-    
 
 
-    public function update(Utilisateur $utilisateur) {
+
+
+
+    public function update(Utilisateur $utilisateur)
+    {
         $stmt = $this->pdo->prepare('
             UPDATE utilisateur SET
                 nom = :nom,
@@ -50,6 +77,8 @@ class UtilisateurDAO {
                 pays = :pays,
                 bio = :bio,
                 photo_profil = :photo_profil,
+                travail = :travail,
+                loisirs = :loisirs,
                 photo_couverture = :photo_couverture
             WHERE id_user = :id_user
         ');
@@ -62,17 +91,21 @@ class UtilisateurDAO {
             'pays' => $utilisateur->getPays(),
             'bio' => $utilisateur->getBio(),
             'photo_profil' => $utilisateur->getPhotoProfil(),
+            'travail' => $utilisateur->getTravail(),
+            'loisirs' => $utilisateur->getLoisirs(),
             'photo_couverture' => $utilisateur->getPhotoCouverture(),
             'id_user' => $utilisateur->getIdUser()
         ]);
     }
 
-    public function delete($id_user) {
+    public function delete($id_user)
+    {
         $stmt = $this->pdo->prepare('DELETE FROM utilisateur WHERE id_user = :id_user');
         $stmt->execute(['id_user' => $id_user]);
     }
 
-    public function authenticate($login, $pass) {
+    public function authenticate($login, $pass)
+    {
         // Vérification dans la base si le mot de passe et le login se trouvent dans la base
         $textR = "SELECT id_role, id_user FROM utilisateur WHERE email=:login AND password=:pass";
         $req = $this->pdo->prepare($textR);
@@ -98,4 +131,3 @@ class UtilisateurDAO {
         header("Location:../routeur.php?action=accueil");
     }
 }
-?>

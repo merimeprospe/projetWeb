@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require_once "utils_inc/Data.php";
 require_once "modules/DAO/PublicationDAO.php";
 require_once "modules/DAO/AmieDAO.php";

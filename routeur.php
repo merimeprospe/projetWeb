@@ -1,80 +1,64 @@
 <?php
-    session_start();
-    require_once "utils_inc/inc_pdo.php";
-    require_once "utils_inc/inc_verifsDroits.php";
+session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
+require_once "utils_inc/inc_verifsDroits.php";
+require_once "utils_inc/Data.php";
+require_once "modules/DAO/UtilisateurDAO.php";
+require_once "modules/DAO/AmieDAO.php";
+require_once "modules/Entites/Amie.php";
+require_once "modules/Entites/Utilisateur.php";
+require_once "modules/DAO/PublicationDAO.php";
+require_once "modules/DAO/NotificationDAO.php";
+require_once "modules/Entites/Notification.php";
+// Récupérer l'action demandée
+$action = $_GET['action'] ?? 'accueil';
 
-    // syntaxe attendue : router.php?action=monAction&param1=valeurA&param2=valeurB...
-    
-    // page de connextion : routeur sans action
-    if (!isset($_GET["action"])){
-        // => accueil;
-        require "vues/formCo.php";
-        exit();
-    } 
-
-
-    if ($_GET["action"]=="accueil"){
+switch ($action) {
+    case 'accueil':
         require_once "controleurs/accueil.php";
         exit();
-    }
+    case 'profile':
+        require_once "controleurs/profile.php";
 
-    // Exemple de routeur
-    $action = $_GET['action'] ?? 'accueil';
+        // Récupérer l'ID de l'utilisateur
+        $id_user = $_GET['id'] ?? $_SESSION['id'];
 
-    switch ($action) {
-        case 'profil':
-            $id_user = $_GET['id'] ?? null;
-            if ($id_user) {
-                $controller = new ProfilController();
-                $controller->afficherProfil($id_user);
-            } else {
-                die("ID utilisateur manquant.");
-            }
-            break;
-        // Autres cas...
-    }
+        // Instancier le contrôleur
+        $controller = new ProfilController();
 
-
-
-    /* if ($_GET["action"]=="traiterAuthentification"){
-        require_once "controleurs/controleurLogin.php";
-        login();
-        exit(); // inutile ici puisque le login redirige, mais plus tranquilisant à la relecture de ce fichier seul
-    }
-
-
-    if ($_GET["action"]=="toutesContribs"){
-        require_once "controleurs/controleurContribs.php";
-
-        if (!estConnecte()){
-            header("location:routeur.php"); // => connection
-            exit();
-        }else{
-            listerToutesContribs(); // fonction située dans le controleur, c'est elle qui apelle (inclut) la vue
+        // Si la méthode est POST, c'est une modification de profil
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $controller->modifierProfil($id_user);
+        } else {
+            // Sinon, afficher le profil
+            $controller->afficherProfil($id_user);
         }
-        //if (!aDroit("admin")) {
-        //    header("location:vues/accueil.php");
-        //    exit();
-       // }
-
         exit();
-    }
-    if ($_GET["action"]=="toutesMembre"){
-        require_once "controleurs/controleurMembre.php";
-
-        if (!estConnecte()){
-            header("location:routeur.php"); // => connection
-            exit();
-        }else{
-            listerToutesMembre(); // fonction située dans le controleur, c'est elle qui apelle (inclut) la vue
+    case 'modifierProfil':
+        require_once "controleurs/profile.php";
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $controller = new ProfilController();
+            $controller->modifierProfil($_GET['id']);
         }
-        //if (!aDroit("admin")) {
-        //    header("location:vues/accueil.php");
-        //    exit();
-       // }
 
-        exit();
-    }
+    case 'conversation':
+        require_once "controleurs/profile.php";
+        $controller = new ProfilController();
+        $id_destinataire = $_GET['id'];
+        $controller->afficherConversation($_SESSION['id'], $id_destinataire);
+        break;
 
- */    die("tutépomé ?");
+    case 'envoyerMessage':
+        require_once "controleurs/profile.php";
+        $controller = new ProfilController();
+        $id_destinataire = $_POST['id_destinataire'];
+        $contenu = $_POST['contenu'];
+        $controller->envoyerMessage($_SESSION['id'], $id_destinataire, $contenu);
+        break;
+
+    default:
+        die("Action non reconnue.");
+}
