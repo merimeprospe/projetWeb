@@ -23,13 +23,13 @@ class AmieController {
         
         require "pages/amie.php";
     }
-
+/* 
     public function control($demandeur, $amie){
         
         $ami = new Amie();
-        $ami= $this->amieDAO->findByDemandeurAndAmie($demandeur, $amie);
+        $ami= $this->amieDAO->findByDemandeurAndAmie($demandeur);
         return $ami;
-    }
+    } */
 
     public function simpleFunction() {
         //echo "Fonction appelée avec succès !";
@@ -37,7 +37,7 @@ class AmieController {
 }
 
 // Gestion des requêtes POST
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+/* if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $action = $_POST['action'];
 
     $controller = new AmieController();
@@ -47,5 +47,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } elseif ($action == 'listes') {
         $controller->listes();
     }
-}
+} */
 

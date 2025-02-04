@@ -11,6 +11,7 @@ require_once "modules/DAO/UtilisateurDAO.php";
 require_once "modules/DAO/AmieDAO.php";
 require_once "modules/Entites/Amie.php";
 require_once "modules/DAO/PublicationDAO.php";
+require_once "modules/DAO/DashboardDAO.php";
 require_once "modules/DAO/NotificationDAO.php";
 require_once "modules/Entites/Notification.php";
 require_once 'controleurs/UserController.php';

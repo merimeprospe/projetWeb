@@ -74,9 +74,7 @@ class PublicationDAO {
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_OBJ);
         var_dump($result); // Debug des données récupérées
-        exit; // Stopper l'exécution pour vérifier le résultat
         return $result;
-
 
         //return $stmt->fetchAll(PDO::FETCH_OBJ); // Retourner un tableau d'objets
     }

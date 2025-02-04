@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../modules/DAO/DashboardDAO.php';
+//require_once __DIR__ . '/../modules/DAO/DashboardDAO.php';
 
 class DashboardController {
     private $dashboardDAO;
