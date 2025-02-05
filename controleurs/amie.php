@@ -12,6 +12,7 @@ class AmieController
         $conn = $con->getconnection();
         $this->amieDAO = new AmieDAO($conn);
         $this->utilisateurDAO = new UtilisateurDAO($conn);
+        
     }
 
     public function listes()

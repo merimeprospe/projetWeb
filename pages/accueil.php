@@ -85,6 +85,11 @@
                             <span><i class="uil uil-home"></i></span>
                             <h3>Home</h3>
                         </a>
+                        <a class="menu-item" href="routeur.php?action=mesGroupes&id_groupe=1">
+                            <span><i class="uil uil-home"></i></span>
+                            <h3>Mes Groupes</h3>
+                        </a>
+
                         <a class="menu-item" id="notifications">
                             <span><i class="uil uil-bell"><small class="notification-count"><?php echo count($notif)  ?></small></i></span>
                             <h3>Notification</h3>
@@ -393,7 +398,7 @@
                         <form action="routeur.php?action=poste" method="post" enctype="multipart/form-data">
                             <label for="titre">Titre :</label>
                             <input type="text" id="titre" name="titre" required class="input">
-
+                            
                             <label for="contenu">Contenu :</label>
                             <textarea id="contenu" name="contenu" rows="8" required class="input"></textarea>
 

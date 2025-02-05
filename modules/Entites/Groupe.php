@@ -12,6 +12,7 @@ class Groupe {
         $this->description = $description;
         $this->id_admin = $id_admin;
     }
+    
 
     public function getIdGroupe() {
         return $this->id_groupe;
