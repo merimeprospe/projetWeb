@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des Utilisateurs</title>
-    <link rel="stylesheet" href="../css/accueil_.css">
+    <link rel="stylesheet" href="css/accueil_.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -80,13 +80,20 @@
             if (document.getElementById("btn"+n+id).innerHTML == "Annuler") {
                 console.log("okokok");
                 
-                $.get("../controleurs/deletAmie.php?id="+id+"&action=deletuser", traiterReponseDemande01(id,n));
+                $.get("routeur.php?id="+id+"&action=deletuser", traiterReponseDemande01(id,n));
                 
             } else {
-                $.get("../controleurs/text.php?id="+id, traiterReponseDemande01(id,n));
+                $.get("routeur.php?id="+id+"&action=ajouter", traiterReponseDemande01(id,n));
                 
             }
         }
+
+        function traiterReponseDemande01(donnees)
+{
+    console.log(donnees);
+
+    $("#unMessage").html(donnees);
+}
 
         
         function traiterReponseDemande01(id,n) {
@@ -102,7 +109,7 @@
 
         function appelerControleur() {
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "../controleurs/amie.php", true);
+            xhr.open("POST", "controleurs/amie.php", true);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
             xhr.onreadystatechange = function() {
@@ -115,12 +122,15 @@
         }
 
         function rediriger() {
-            window.location.href = "../routeur.php?action=accueil";
+            window.location.href = "routeur.php?action=accueil";
         }
 
         function search() {
-            console.log(document.getElementById("search").value);
-            window.location.href = "../controleurs/amie.php?val=" + document.getElementById("search").value;
+            if (document.getElementById("search").value) {
+                console.log(document.getElementById("search").value);
+                window.location.href = "routeur.php?action=amie&val="+document.getElementById("search").value;
+                //window.location.href = "controleurs/amie.php?val=" + document.getElementById("search").value;
+            }
         }
     </script>
 </head>
@@ -130,7 +140,7 @@
     <nav>
         <div class="container">
             <div class="logo" onclick="rediriger()">
-                <img src="../assets/images/logo.jpg" style="width: 10%; height: 10%;">
+                <img src="assets/images/logo.jpg" style="width: 10%; height: 10%;">
                 <h2 class="log">
                     Social
                 </h2>
@@ -140,9 +150,14 @@
                 <input type="search" placeholder="Search for inspiration and projects..." id="search">
             </div>
             <div class="create">
-                <label class="btn btn-primary" for="create post" onclick="search()">Create</label>
+                <label class="btn btn-primary" for="create post" onclick="search()">?</label>
                 <div class="profile-photo">
-                    <img src="../assets/infos/R.jpeg">
+                <?php if ($utilisateur['photo_profil']) {
+                            # code...
+                            echo '<img src="data:image/jpeg;base64,' . base64_encode($utilisateur['photo_profil']) . '" alt="Photo de l\'objet" class="profile-picture"> ';
+                        } else {?>
+                            <img src="assets/infos/1.png" />
+                       <?php }  ?>
                 </div>
             </div>
         </div>
@@ -155,7 +170,7 @@
                 if ($uneLigne->id_user != $_SESSION['id'] ) {
                 ?>
             <div class="user-card">
-                <img src="../assets/infos/R.jpeg" alt="User 2">
+                <img src="assets/infos/R.jpeg" alt="User 2">
                 <div class="user-info">
                     <h3><?php echo $uneLigne->nom ?></h3>
                     <h5><?php echo $uneLigne->prenom ?></h5>
@@ -167,6 +182,9 @@
                      foreach($amis as $uneLign) {
                         if ($uneLigne->id_user == $uneLign->amie || $uneLigne->id_user == $uneLign->demandeur) {
                             $n = 1;
+                            if ($uneLign->amie!= $_SESSION['id']){
+
+                            
                             if ($uneLign->decision==true) {?>
                                 <button class="btn btn-secondary">Message</button>
                         <?php
@@ -175,8 +193,12 @@
                                 <button id="<?php echo 'btn2' . $uneLigne->id_user ?>"   class="btn btn-secondary" onclick="Demande(<?php echo $uneLigne->id_user?>,'2')">Annuler</button>
                         <?php
                             }
-                        }
-                    }
+                        }else{
+                            {?>
+                                <button class="btn btn-secondary">En Attend</button>
+                        <?php
+                        }}
+                    }}
                 ?>
                 <?php if($n==0){ ?>
                     <button id="<?php echo 'btn1' . $uneLigne->id_user ?>"

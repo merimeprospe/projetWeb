@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,10 +12,10 @@
         <!-- My Custom Stylesheet -->
         <link rel="stylesheet" href="css/accueil_.css">
         <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
+        <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
     </head>
-    <style>
-        
-    </style>
+   
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <body>
 
@@ -23,6 +25,7 @@
             <div class="container">
                 <div class="logo">
                     <img src="assets/images/logo.jpg" style="width: 12%; height: 10%;">
+                    
                     <h2 class="log">
                         Social
                     </h2>
@@ -32,9 +35,19 @@
                     <input type="search" placeholder="Search for inspiration and projects..." id="search">
                 </div>
                 <div class="create">
-                    <label class="btn btn-primary" onclick="rediriger()" for="create post">Create</label>
+                    <label class="btn btn-primary" onclick="rediriger()" for="create post">?</label>
                     <div class="profile-photo">
-                        <img src="assets/infos/R.jpeg">
+
+                        <a href="routeur.php?action=profile">
+                            <!------<img src="assets/profile_img-88x88/profile1-88x88.jpg">------->
+                            <?php if ($utilisateur['photo_profil']) {
+                                # code...
+                                echo '<img src="data:image/jpeg;base64,' . base64_encode($utilisateur['photo_profil']) . '" alt="Photo de l\'objet" class="profile-picture"> ';
+                            }else {?>
+                                <img src="assets/infos/1.png" />
+                           <?php }  ?>
+                        </a>
+                        
                     </div>
                 </div>
             </div>
@@ -49,12 +62,19 @@
                     <!--Profile Section-->
                     <a class="profile">
                         <div class="profile-photo">
-                            <img src="assets/infos/R.jpeg" />
+                           <?php if ($utilisateur['photo_profil']) {
+                            # code...
+                            echo '<img src="data:image/jpeg;base64,' . base64_encode($utilisateur['photo_profil']) . '" alt="Photo de l\'objet" class="profile-picture"> ';
+                        } else {?>
+                            <img src="assets/infos/1.png" />
+                       <?php }  ?>
                         </div>
                         <div class="handle">
-                            <h4>Ren Lum-Fao</h4>
+                            <h4><?php echo $utilisateur["nom"] . ' ' . $utilisateur["prenom"]; ?></h4>
                             <p class="text-muted">
-                                @renlumfao
+                                @<?php if ($utilisateur['nom']){echo $utilisateur["nom"];}else {
+                                   echo $utilisateur["email"] ;
+                                } ?>
                             </p>
                         </div>
                     </a>
@@ -80,10 +100,15 @@
                                     ?>
                                     <div style= "display: flex;gap: 10px; margin:10px">
                                         <div class="profile-photo">
-                                            <img src="assets/infos/R.jpeg" />
+                                        <?php if ($uneLigne->photo_profil) {
+                                                # code...
+                                                echo '<img src="data:image/jpeg;base64,' . base64_encode($uneLigne->photo_profil) . '" alt="Photo de l\'objet" class="profile-picture"> ';
+                                            }  else {?>
+                                                <img src="assets/infos/1.png" />
+                                        <?php }  ?> 
                                         </div>
                                         <div class="notificaion-body" style="margin-top: 10px;">
-                                            <b> <?php echo $uneLigne->getSendUser() ?></b> <?php echo $uneLigne->getMessage() ?>
+                                            <b> <?php echo $uneLigne->nom ?></b> <?php echo $uneLigne->message ?>
                                             <small class="text-muted">Now</small>
                                         </div>
                                     </div>
@@ -99,9 +124,9 @@
                             <span><i class="uil uil-palette"></i></span>
                             <h3>Theme</h3>
                         </a>
-                        <a class="menu-item">
-                            <span><i class="uil uil-setting"></i></span>
-                            <h3>Settings</h3>
+                        <a class="menu-item" onclick="Logout()">
+                            <span><i class="uil uil-signout"></i></span>
+                            <h3>Logout</h3>
                         </a>    
                     </div>
                     <!--End Of Sidebar Section-->
@@ -114,7 +139,12 @@
                     <!-- The Create Post Section-->
                     <form class="create-post">
                         <div class="profile-photo">
-                            <img src="assets/infos/R.jpeg ">                       </div>
+                        <?php if ($utilisateur['photo_profil']) {
+                        # code...
+                        echo '<img src="data:image/jpeg;base64,' . base64_encode($utilisateur['photo_profil']) . '" alt="Photo de l\'objet" class="profile-picture"> ';
+                    }  else {?>
+                        <img src="assets/infos/1.png" />
+                   <?php }  ?>                     </div>
                         <input type="text" placeholder="What's on your mine?" id="create-post">
                         <!-- Trigger/Open The Modal -->
                         <input value="Post" class="btn btn-primary" id="myBtn">
@@ -123,45 +153,6 @@
                     <!--The Feeds Section-->
                     <div class="feeds">
                         <!--Feed One-->
-                        <div class="feed">
-                            <div class="head">
-                                <div class="user">
-                                    <div class="profile-photo">
-                                        <img src="assets/infos/R.jpeg">
-                                    </div>
-                                    <div class="ingo">
-                                        <h3>Frosty</h3>
-                                        <small>Birmingham, United Kingdom, <span class="capitalise">44 minutes ago</span></small>
-                                    </div>
-                                </div>
-                                <span class="edit">
-                                    <i class="uil uil-ellipsis-h"></i>
-                                </span>
-                            </div>
-                            <div class="photo">
-                                <img src="assets/infos/R.jpeg">                       </div>
-                            <div class="action-buttons">
-                                <div class="interaction-buttons">
-                                    <span><i class="uil uil-heart"></i></span>
-                                    <span><i class="uil uil-comment-dots"></i></span>
-                                    <span><i class="uil uil-share-alt"></i></span>
-                                </div>
-                                <div class="bookmark">
-                                    <span><i class="uil uil-bookmark-full"></i></span>
-                                </div>
-                            </div>
-                            <div class="liked-by">
-                                <span><img src="./assets/profile_img-44x44/profile3-44x44.jpg" ></span>
-                                <span><img src="./assets/profile_img-44x44/profile6-44x44.jpg" ></span>
-                                <span><img src="./assets/profile_img-44x44/profile2-44x44.jpg" ></span>
-                                <p>Liked by <b>Spider-Man</b> and <b>7,231 others</b></p>
-                            </div>
-
-                            <div class="caption">
-                                <p><b>Frosty</b> Check out this game running on the Steam Deck! <span class="hash-tag">#Amazing</span></p>
-                            </div>
-                            <div class="comments text-muted">View All 532 comments</div>
-                        </div>
                         <?php
                         foreach($tabRes as $uneLigne) {
                             ?>
@@ -170,11 +161,16 @@
                                 <div class="head">
                                     <div class="user">
                                         <div class="profile-photo">
-                                            <img src="assets/infos/R.jpeg">
+                                        <?php if ($uneLigne->photo_profil) {
+                                                # code...
+                                                echo '<img src="data:image/jpeg;base64,' . base64_encode($uneLigne->photo_profil) . '" alt="Photo de l\'objet" class="profile-picture"> ';
+                                            }  else {?>
+                                                <img src="assets/infos/1.png" />
+                                        <?php }  ?> 
                                         </div>
                                         <div class="ingo">
-                                            <?php echo "  <h3>".$uneLigne["Titre"]."</h3>";?>
-                                            <small><?php echo $uneLigne["Titre"] ?>, <span class="capitalise"><?php echo $uneLigne["created_at"] ?></span></small>
+                                            <?php echo "  <h3>".$uneLigne->Titre."</h3>";?>
+                                            <small><?php echo $uneLigne->nom ?>, <span class="capitalise"><?php echo $uneLigne->created_at ?></span></small>
                                         </div>
                                     </div>
                                     <span class="edit">
@@ -182,30 +178,18 @@
                                     </span>
                                 </div>
                                 <div class="photo">
-                                    <?php if ($uneLigne['photo']) {
+                                    <?php if ($uneLigne->photo) {
                                         # code...
-                                        echo '<img src="data:image/jpeg;base64,' . base64_encode($uneLigne['photo']) . '" alt="Photo de l\'objet">';
+                                        echo '<img src="data:image/jpeg;base64,' . base64_encode($uneLigne->photo) . '" alt="Photo de l\'objet">';
                                     }  ?>
                                 </div>
                                 <div class="action-buttons">
                                     <div class="interaction-buttons">
                                         <span><i class="uil uil-heart"></i></span>
-                                        <span><i class="uil uil-comment-dots"></i></span>
-                                        <span><i class="uil uil-share-alt"></i></span>
-                                    </div>
-                                    <div class="bookmark">
-                                        <span><i class="uil uil-bookmark-full"></i></span>
                                     </div>
                                 </div>
-                                <div class="liked-by">
-                                    <span><img src="assets/infos/R.jpeg"></span>
-                                    <span><img src="assets/infos/R.jpeg"></span>
-                                    <span><img src="assets/infos/R.jpeg"></span>
-                                    <p>Liked by <b>Spider-Man</b> and <b>7,231 others</b></p>
-                                </div>
-
                                 <div class="caption">
-                                    <p><b>Frosty</b> <?php echo $uneLigne["contenu"] ?> <span class="hash-tag">#Amazing</span></p>
+                                    <p> <?php echo $uneLigne->contenu ?> <span class="hash-tag">#Amazing</span></p>
                                 </div>
                                 <div class="comments text-muted">View All 532 comments</div>
                             </div>
@@ -292,11 +276,18 @@
                             <div class="request" id="<?php echo 'btn' . $uneLigne->id ?>">
                                 <div class="info">
                                     <div class="profile-photo">
-                                        <img src="assets/infos/R.jpeg">
+                                        <a href="<?php echo 'routeur.php?action=profile&id='  . $uneLigne->id_user ?>">
+                                    <?php if ($uneLigne->photo_profil) {
+                                            # code...
+                                            echo '<img src="data:image/jpeg;base64,' . base64_encode($uneLigne->photo_profil) . '" alt="Photo de l\'objet" class="profile-picture"> ';
+                                        }  else {?>
+                                            <img src="assets/infos/1.png" />
+                                    <?php }  ?> </a>
                                     </div>
                                     <div>
-                                        <h5><?php echo $uneLigne->amie ?></h5>
+                                        <h5><?php echo $uneLigne->nom ?></h5>
                                         <p class="text-muted" style="font-size: 13px;">
+                                        vous a envoyé une demande le
                                          <?php echo $uneLigne->date ?>
                                         </p>
                                     </div>
@@ -381,12 +372,17 @@
                     <span class="close">&times;</span>
                     <div style="    display: flex">
                         <div class="profile-photo">
-                            <img src="assets/infos/R.jpeg" />
+                        <?php if ($utilisateur['photo_profil']) {
+                        # code...
+                        echo '<img src="data:image/jpeg;base64,' . base64_encode($utilisateur['photo_profil']) . '" alt="Photo de l\'objet" class="profile-picture"> ';
+                    }  else {?>
+                        <img src="assets/infos/1.png" />
+                   <?php }  ?> 
                         </div>
                         <div class="handle" style="margin-left: 3vh;">
-                            <h4 style="color:black">Ren Lum-Fao</h4>
+                        <h4><?php echo $utilisateur["nom"] . ' ' . $utilisateur["prenom"]; ?></h4>
                             <p class="text-muted">
-                                @renlumfao
+                                @<?php echo $utilisateur["email"] ?>
                             </p>
                         </div>
                     </div>
@@ -399,8 +395,7 @@
                                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
                                 border-radius: 8px;">
                         <h2>Formulaire de Publication</h2>
-                        <form action="controleurs/poste.php" method="post" enctype="multipart/form-data">
-                       
+                        <form action="routeur.php?action=poste" method="post" enctype="multipart/form-data">
                             <label for="titre">Titre :</label>
                             <input type="text" id="titre" name="titre" required class="input">
                             
@@ -412,6 +407,7 @@
                                 <input type="file" id="image" name="image" accept="image/*" required>
                                 <span id="file-name">Aucune image sélectionnée</span>
                             </div>
+                            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>" />
 
                             <button class="button" type="submit">Publier</button>
                         </form>
@@ -425,17 +421,19 @@
         <script>
             function refuser(id) {
                 console.log("btn: "+id);
-                $.get("controleurs/deletAmie.php?id="+id+"&action=deletid", traiterReponseDemande01(id));
+                //$.get("controleurs/deletAmie.php?id="+id+"&action=deletid", traiterReponseDemande01(id));
+                $.get("routeur.php?id="+id+"&action=deletid", traiterReponseDemande01);
             }
 
             function accepter(id) {
                 console.log("btn: accepter"+id);
-                $.get("controleurs/deletAmie.php?id="+id+"&action=Accepter", traiterReponseDemande01(id));
+                //$.get("controleurs/deletAmie.php?id="+id+"&action=Accepter", traiterReponseDemande01(id));
+                $.get("routeur.php?id="+id+"&action=Accepter", traiterReponseDemande01);
             }
 
-            function traiterReponseDemande01(id) {
-                console.log("btn"+id);
-                document.getElementById("btn"+id).className  = "hidden"
+            function traiterReponseDemande01(donnees) {
+                console.log(donnees.id);
+                document.getElementById("btn"+donnees["id"]).className  = "hidden"
             }
 
             const fileInput = document.getElementById('image');
@@ -476,11 +474,16 @@
             }
             }
             function rediriger() {
+                console.log(document.getElementById("search"));
+                
                 if (document.getElementById("search").value) {
-                    
-                   window.location.href = "controleurs/amie.php?val="+document.getElementById("search").value;
+                    window.location.href = "routeur.php?action=amie&val="+document.getElementById("search").value;
+                   //window.location.href = "controleurs/amie.php?val="+document.getElementById("search").value;
                 }
                 
+            }
+            function Logout() { 
+                window.location.href = "routeur.php?action=Logout";
             }
         </script>
         <script src="js/script.js"></script>

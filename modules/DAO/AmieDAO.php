@@ -62,7 +62,10 @@ class AmieDAO {
     }
 
     public function findAlldemande($id) {
-        $stmt = $this->pdo->prepare('SELECT * FROM amies WHERE amie = :id');
+        $stmt = $this->pdo->prepare('SELECT amies.*, utilisateur.*
+                                    FROM amies
+                                    JOIN utilisateur ON amies.demandeur = utilisateur.id_user
+                                    WHERE amies.amie = :id');
         $stmt->execute(['id' => $id]);
         return $stmt->fetchAll(PDO::FETCH_CLASS);
     }
@@ -75,5 +78,35 @@ class AmieDAO {
         ]);
         return $stmt->fetchAll(PDO::FETCH_CLASS);
     }
+
+
+    /////////////////
+
+    public function deleteFriendRelation($userId, $friendId) {
+        $stmt = $this->pdo->prepare('
+            DELETE FROM amies 
+            WHERE (demandeur = :user AND amie = :friend) 
+            OR (demandeur = :friend AND amie = :user)
+        ');
+        $stmt->execute([
+            'user' => $userId,
+            'friend' => $friendId
+        ]);
+    }
+
+    public function findPendingRequests($userId) {
+        $stmt = $this->pdo->prepare('
+            SELECT * FROM amies 
+            WHERE amie = :userId 
+            AND decision = 0
+        ');
+        $stmt->execute(['userId' => $userId]);
+        return $stmt->fetchAll(PDO::FETCH_CLASS);
+    }
+
+
+
+
+
 }
 ?>

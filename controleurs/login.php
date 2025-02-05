@@ -1,8 +1,4 @@
 <?php
-session_start();
-
-require_once "../utils_inc/Data.php"; // $pdo existe ici désormais
-require_once "../modules/DAO/UtilisateurDAO.php"; 
 
 class AuthController {
     private $user;
@@ -16,15 +12,14 @@ class AuthController {
 
     public function authenticate($login, $pass) {
         // Appel de la méthode authenticate de l'objet UtilisateurDAO
+      
         return $this->user->authenticate($login, $pass);
+    }
+    public function register($login, $pass) {
+        // Appel de la méthode authenticate de l'objet UtilisateurDAO
+      
+        return $this->user->create1($login, $pass);
     }
 }
 
-// Utilisation de la classe
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $login = $_POST["login"];
-    $pass = $_POST["pass"];
-    $authController = new AuthController();
-    $authController->authenticate($login, $pass);
-}
-?>
+

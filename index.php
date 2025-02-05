@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/loginStyle.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Connexion</title>
 </head>
 <body>
     <?php
-        session_start();
+       if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
         // Vérifier s'il y a une notification à afficher
         if (isset($_SESSION['notification'])) {
             echo " <style>.alerte {
@@ -30,7 +33,7 @@
                     </style>
                 <div class='alerte'>
                     <div style='padding-left: 0.75rem; padding-right: 2.5rem; font-size: 17px;'>
-                        Mot de passe ou login incorrect. Veuillez réessayer.
+                        ".$_SESSION['notification']."
                     </div>
                     <div class='fermeture' style='width: 1.2rem; height: 1.2rem; cursor: pointer;' id='myButton'>
                         <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor' class='w-6 h-6'>
@@ -53,6 +56,19 @@
             // Supprimer la notification après l'affichage
            unset($_SESSION['notification']);
         }
+                
+        function generateCsrfToken() {
+            if (empty($_SESSION['csrf_token'])) {
+                $token = '';
+                for ($i = 0; $i < 32; $i++) {
+                    $token .= chr(mt_rand(33, 126)); // Génère un caractère aléatoire
+                }
+                $_SESSION['csrf_token'] = bin2hex($token);
+            }
+            return $_SESSION['csrf_token'];
+        }
+        
+        $csrf_token = generateCsrfToken();
     ?>
     <section class="container">
         <div class="login-container">
@@ -60,19 +76,40 @@
             <div class="form-container">
                 <img src="https://raw.githubusercontent.com/hicodersofficial/glassmorphism-login-form/master/assets/illustration.png" alt="illustration" class="illustration" />
                 <h1 class="opacity">LOGIN</h1>
-                <form id="formLogin" action="controleurs/login.php" method="post">
-                    <input  name="login" type="text" placeholder="USERNAME" />
-                    <input name="pass" type="password" placeholder="PASSWORD" />
+                <form id="formLogin" action="routeur.php?action=login" method="post">
+                    <input  name="login" type="text" placeholder="USERNAME" required/>
+                    <input name="pass" type="password" placeholder="PASSWORD" required />
+                    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>" />
                     <button class="opacity" style="color: #fff">SUBMIT</button>
                 </form>
                 <div class="register-forget opacity">
-                    <a href="">FIRST CONNECTION</a>
+                    <a onclick="register()"style="cursor: pointer;">FIRST CONNECTION</a>
                     <a href="">FORGOT PASSWORD</a>
                 </div>
             </div>
             <div class="circle circle-two"></div>
         </div>
         <div class="theme-btn-container"></div>
+        
     </section>
 </body>
+<script>
+    function register() {
+    var login = document.forms["formLogin"]["login"].value;
+    var pass = document.forms["formLogin"]["pass"].value;
+    var token = document.forms["formLogin"]["csrf_token"].value;
+
+    // Regex pour vérifier que l'email se termine par @3il.fr
+    var emailPattern = /^[a-zA-Z0-9._%+-]+@3il\.fr$/;
+
+    if (!emailPattern.test(login)) {
+        
+        alert("L'adresse email doit se terminer par @3il.fr");
+        return false;
+    }
+
+    window.location.href = "routeur.php?action=register&login=" + login + "&pass=" + pass + "&token=" + token;
+}
+
+</script>
 </html>

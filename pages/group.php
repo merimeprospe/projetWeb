@@ -162,6 +162,68 @@
     padding: 15px;
 }
 
+.scrollable-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-bottom: 15px;
+}
+
+.message-form {
+    position: sticky;
+    bottom: 0;
+    background: white;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+/* Pour le défilement fluide */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Style personnalisé de la scrollbar */
+.scrollable-messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scrollable-messages::-webkit-scrollbar-track {
+    background:rgb(234, 159, 84);
+    border-radius: 3px;
+}
+
+.scrollable-messages::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+.scrollable-messages::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+}
+
 .message {
     margin: 15px 0;
     padding: 12px;
@@ -418,7 +480,7 @@ html {
                             <h3>MY GROUPS</h3>
                         </a>
                       
-                        <div class="group-list">
+                        <div class="group-liste">
                              <?php if (!empty($groupes) && is_array($groupes)) : ?>
                              <?php foreach ($groupes as $groupe) : ?>
                                 <a class="profile" href="routeur.php?action=mesGroupes&id_groupe=<?php echo $groupe['id_groupe']; ?>" onclick="setGroupeSession(<?php echo $groupe['id_groupe']; ?>)" >
