@@ -9,7 +9,7 @@ class Amie {
 
     // Getters
     public function getId() {
-        return $id;
+        return $this->id;
     }
 
     public function getDemandeur() {

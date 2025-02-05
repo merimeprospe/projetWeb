@@ -32,7 +32,7 @@ class NotificationDAO {
             $notification->setMessage($row['message']);
             $notification->setDate($row['date']);
             $notification->setIsRead($row['is_read']);
-            $notification->setSentUser($row['send_user']);
+            $notification->setSendUser($row['send_user']);
             return $notification;
         }
         return null;
@@ -49,7 +49,7 @@ class NotificationDAO {
             $notification->setMessage($row['message']);
             $notification->setDate($row['date']);
             $notification->setIsRead($row['is_read']);
-            $notification->setSentUser($row['send_user']);
+            $notification->setSendUser($row['send_user']);
             $notifications[] = $notification;
         }
         return $notifications;
@@ -75,23 +75,15 @@ class NotificationDAO {
     }
 
     public function getNotificationsByUserId($userId) {
-        $query = "SELECT * FROM notification WHERE user_id = :user_id";
+        $query = "SELECT notification.*, utilisateur.*
+                FROM notification
+                JOIN utilisateur ON notification.send_user = utilisateur.id_user
+                WHERE notification.user_id = :user_id;";
         $stmt = $this->connection->prepare($query);
         $stmt->execute([
             'user_id' => $userId
         ]);
-        $notifications = [];
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $notification = new Notification();
-            $notification->setId($row['id']);
-            $notification->setUserId($row['user_id']);
-            $notification->setMessage($row['message']);
-            $notification->setDate($row['date']);
-            $notification->setIsRead($row['is_read']);
-            $notification->setSendUser($row['send_user']);
-            $notifications[] = $notification;
-        }
-        return $notifications;
+        return $stmt->fetchAll(PDO::FETCH_CLASS);
     }
 
 }
