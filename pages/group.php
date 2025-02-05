@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
@@ -7,178 +6,288 @@
         <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
         <meta name="description" content="TMF's Social Media">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- My Custom Stylesheet -->
-        <link rel="stylesheet" href="../css/accueil_.css">
+        <link rel="stylesheet" href="css/accueil_.css">
         <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
-    </head>
-    <style>
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        .input{
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .file-input-container {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .file-input-container input[type="file"] {
-            display: none;
-        }
-        .file-input-container label {
-            background: #0998c1;
-            color: #fff;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-right: 10px;
-        }
-        .file-input-container span {
-            font-size: 14px;
-            color: #555;
-        }
-        .button {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            background: #0998c1;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .button:hover {
-            background:rgb(210, 232, 243);
-            color: #0998c1;
+        <style>
+            /* Ajouts pour les modals */
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1000;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                background-color: rgba(0,0,0,0.4);
+            }
+
+            .modal-content {
+                background-color: #fff;
+                margin: 5% auto;
+                padding: 25px;
+                width: 90%;
+                max-width: 600px;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            }
+
+            .modal-header {
+                border-bottom: 1px solid #eee;
+                padding-bottom: 15px;
+                margin-bottom: 20px;
+            }
+
+            .form-group {
+                margin-bottom: 20px;
+            }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 8px;
+                font-weight: 500;
+            }
+
+            .input {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+
+            /* Styles existants conservés */
+            .group-item {
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+                margin: 10px 0;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                transition: background-color 0.3s ease;
+            }
+
+            .group-item:hover {
+                background-color: rgb(213, 247, 248);
+            }
+
+            .group-photo {
+                width: 50px;
+                height: 50px;
+                margin-right: 15px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .group-photo img {
+                width: 100%;
+                height: auto;
+                border-radius: 50%;
+            }
+
+            .group-name h5 {
+                font-size: 16px;
+                font-weight: bold;
+                color: #333;
+                margin: 0;
+            }
+
+            nav .container {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                position: relative;
+            }
+
+            .search-bar {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 40%;
+                min-width: 300px;
+                background: white;
+                border-radius: 25px;
+                padding: 8px 15px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .groupe-list {
+                display: none;
+                position: absolute;
+                top: calc(100% + 10px);
+                left: 50%;
+                transform: translateX(-50%);
+                width: 40%;
+                min-width: 300px;
+                max-height: 400px;
+                overflow-y: auto;
+                background: white;
+                z-index: 1000;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            .groupe-item {
+                padding: 12px;
+                cursor: pointer;
+                border-bottom: 1px solid #eee;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                transition: all 0.2s;
+            }
+
+            .btn-rejoindre {
+                background: #0998c1;
+                color: white;
+                border: none;
+                padding: 6px 12px;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+       /* Styles pour les messages */
+.messages {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.message {
+    margin: 15px 0;
+    padding: 12px;
+    border-radius: 8px;
+    background: #f8f9fa;
+    transition: all 0.3s ease;
+}
+
+.message:hover {
+    background: #e9ecef;
+}
+
+.message-body h6 {
+    margin: 0 0 5px 0;
+    color: #0998c1;
+    font-size: 14px;
+}
+
+.message-body p {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.message-body small {
+    color: #6c757d;
+    font-size: 12px;
+}
+
+.message-form {
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+}
+
+.input-group .input {
+    flex-grow: 1;
+    padding: 12px;
+    border-radius: 25px;
+}
+
+.input-group button {
+    border-radius: 25px;
+    padding: 12px 25px;
+}
+
             
-        }
-        body {font-family: Arial, Helvetica, sans-serif;}
-
-        /* The Modal (background) */
-        .modal {
-        display: none; /* Hidden by default */
-        position: fixed; /* Stay in place */
-        z-index: 1; /* Sit on top */
-        padding-top: 100px; /* Location of the box */
-        left: 0;
-        top: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgb(0,0,0); /* Fallback color */
-        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-        }
-        /* Other styles */ 
-        .menu-items { display: inline-block; margin-right: 20px; /* Add space between icons */ } 
-        .menu-items i { width: 30px; /* Increase width */ height: 30px; /* Increase height */ font-size: 30px; /* Increase font size for bigger icons */ }
-
-        /* Modal Content */
-        .modal-content {
-        z-index: 10px;
-        border-radius: 10px;
-        position: relative;
-        background-color: #fefefe;
-        margin: auto;
-        padding: 0;
-        padding: 4vh;
-        border: 1px solid #888;
-        width: 80%;
-        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-        -webkit-animation-name: animatetop;
-        -webkit-animation-duration: 0.4s;
-        animation-name: animatetop;
-        animation-duration: 0.4s
-        
-        }
-
-        /* Add Animation */
-        @-webkit-keyframes animatetop {
-        from {top:-300px; opacity:0} 
-        to {top:0; opacity:1}
-        }
-
-        @keyframes animatetop {
-        from {top:-300px; opacity:0}
-        to {top:0; opacity:1}
-        }
-
-        /* The Close Button */
-        .close {
-        color: #0998c1;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-        color: #000;
-        text-decoration: none;
-        cursor: pointer;
-        }
-
-        .modal-header {
-        padding: 2px 16px;
-        background-color:rgb(255, 255, 255);
-        color: white;
-        }
-
-        .modal-body {padding: 2px 16px;}
-
-        .modal-footer {
-        padding: 2px 16px;
-        background-color: #5cb85c;
-        color: white;
-        }
-    </style>
+        </style>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
     <body>
-
-        <!--------Navigation Section---------->
-
-        <nav> 
-            <div class="container"> 
-                <div class="logo">
-                     <img src="assets/images/logo.jpg" style="width: 12%; height: 10%;"> 
-                     <h2 class="log"> Social </h2> 
-                </div> 
-                <div class="search-bar"> 
-                    <i class="uil uil-search"></i>
-                    <input type="search" placeholder="Search for groups."> 
-                </div> 
-                <div class="create">
-                     <label class="btn btn-primary" for="create post">Create</label> 
+        <!-- Modals -->
+        <div id="createGroupModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close" onclick="closeModal('createGroupModal')">&times;</span>
+            <h2>Créer un nouveau groupe</h2>
+        </div>
+        <div class="modal-body">
+            <form id="createGroupForm" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label>Nom du groupe</label>
+                    <input type="text" name="nom_groupe" required class="input">
                 </div>
-                 <div class="menu-items"> 
-                    <i class="uil uil-home"></i> 
-                </div> 
-               
-                </div> 
-                </nav>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea name="description" rows="3" class="input"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Image du groupe</label>
+                    <input type="file" name="group_image" accept="image/*" class="input">
+                </div>
+                <button type="button" class="btn btn-primary" onclick="submitGroupForm()">Créer</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+        <nav>
+            <div class="container">
+                <div class="logo">
+                    <img src="assets/images/logo.jpg" style="width: 12%; height: 10%;">
+                    <h2 class="log">Social</h2>
+                </div>
+
+                <div class="search-bar">
+                    <i class="uil uil-search"></i>
+                    <input type="search" id="searchGroup" 
+                           placeholder="Search for groups..."
+                           style="border: none; outline: none; width: 90%; padding: 0 8px;">
+                </div>
+                <div id="groupList" class="groupe-list"></div>
+
+                <div class="create">
+                    <label class="btn btn-primary" onclick="openModal('createGroupModal')">Create</label>
+                    <div class="profile-photo">
+                        <img src="assets/infos/R.jpeg">
+                    </div>
+                </div>
+            </div>
+        </nav>
 
         <main>
             <div class="container">
                 <!--Left Section-->
                 <div class="left">
                     <!--Profile Section-->
-                    <a class="profile">
-                        <div class="profile-photo">
-                            <img src="assets/infos/R.jpeg" />
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">Group Name</h5>
-                            
-                        </div>
-                    </a>
+                    <?php if (isset($groupee)): ?>
+        <a class="profile" href="routeur.php?action=profilGroupe&id_groupe=<?php echo $groupee['id_groupe']; ?>" onclick="setGroupeSession(<?php echo $groupe['id_groupe']; ?>)" >
+
+        
+        <div class="profile-photo">
+        <?php if (!empty($groupee['photogroupe'])): ?>
+          <img src="data:image/jpeg;base64,<?= base64_encode($groupee['photogroupe']) ?>" alt="Cover photo">
+        <?php endif; ?>
+        </div>
+
+        <div class="card-body">
+            <!-- Afficher le nom du groupe -->
+            <h5 class="card-title"><?php echo htmlspecialchars($groupee['nom_groupe']); ?></h5>
+ 
+        </div>
+    </a>
+<?php else: ?>
+    <p>Informations du groupe non disponibles.</p>
+<?php endif; ?>
                     <!--End Of Profile Section-->
                     <!--Side Bar Section-->
                     <div class="sidebar">
@@ -186,64 +295,47 @@
                             <span><i class="uil uil-add"></i></span>
                             <h3>MY GROUPS</h3>
                         </a>
-                        <a class="profile">
-                        <div class="profile-photo">
-                            <img src="assets/infos/R.jpeg" />
+                      
+                        <div class="group-list">
+                             <?php if (!empty($groupes) && is_array($groupes)) : ?>
+                             <?php foreach ($groupes as $groupe) : ?>
+                                <a class="profile" href="routeur.php?action=mesGroupes&id_groupe=<?php echo $groupe['id_groupe']; ?>" onclick="setGroupeSession(<?php echo $groupe['id_groupe']; ?>)" >
+
+                                <div class="profile-photo">
+                                    <?php if (!empty($groupe['photogroupe'])): ?>
+                                    <img src="data:image/jpeg;base64,<?= base64_encode($groupe['photogroupe']) ?>" alt="../assets/infos/R.jpeg">
+                                    <?php endif; ?>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title"><?= htmlspecialchars($groupe['nom_groupe']) ?></h5>
+                                </div>
+                                </a>
+                            <?php endforeach; ?>
+                            <?php else : ?>
+                            <p>Aucun groupe trouvé.</p>
+                            <?php endif; ?>
+                            <!--<a class="profile" >
+                            <ul>
+                                 <?php foreach ($groupes as $groupe) : ?>
+                                 <li>
+                                    <a href="#" onclick="setGroupeSession(<?php echo $groupe['id_groupe']; ?>)">
+                                        <?php echo htmlspecialchars($groupe['nom_groupe']); ?>
+                                    </a>
+                                 </li>
+                                <?php endforeach; ?>
+                            </ul>
+                            </a>-->
+                            <script>
+                                function setGroupeSession(idGroupe) {
+                                fetch('../controllers/set_groupe_session.php?id_groupe=' + idGroupe)
+                                .then(response => console.log("ID du groupe stocké en session"))
+                                .catch(error => console.error("Erreur :", error));
+                                }
+                            </script>
                         </div>
-                        <div class="card-body">
-                            <h5 class="card-title">Group Name</h5>
-                            
-                        </div>
-                        </a>
-                        <a class="profile">
-                        <div class="profile-photo">
-                            <img src="assets/infos/R.jpeg" />
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">Group Name</h5>
-                            
-                        </div>
-                        </a>
-                        <a class="profile">
-                        <div class="profile-photo">
-                            <img src="assets/infos/R.jpeg" />
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">Group Name</h5>
-                            
-                        </div>
-                        </a>
-                        <a class="profile">
-                        <div class="profile-photo">
-                            <img src="assets/infos/R.jpeg" />
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">Group Name</h5>
-                            
-                        </div>
-                        </a>
-                        <a class="profile">
-                        <div class="profile-photo">
-                            <img src="assets/infos/R.jpeg" />
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">Group Name</h5>
-                            
-                        </div>
-                        </a>
-                        <a class="profile">
-                        <div class="profile-photo">
-                            <img src="assets/infos/R.jpeg" />
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">Group Name</h5>
-                            
-                        </div>
-                        </a>
-                        
+                        <!--End Of Sidebar Section-->
                     </div>
-                    <!--End Of Sidebar Section-->
-               </div>
+                    </div>
                 <!--End Of Left Section-->
                 <!--Middle Section-->
                 <div class="middle">
@@ -259,46 +351,6 @@
                     <!--End Of The Create Post Section-->
                     <!--The Feeds Section-->
                     <div class="feeds">
-                        <!--Feed One-->
-                        <div class="feed">
-                            <div class="head">
-                                <div class="user">
-                                    <div class="profile-photo">
-                                        <img src="assets/infos/R.jpeg">
-                                    </div>
-                                    <div class="ingo">
-                                        <h3>Frosty</h3>
-                                        <small>Birmingham, United Kingdom, <span class="capitalise">44 minutes ago</span></small>
-                                    </div>
-                                </div>
-                                <span class="edit">
-                                    <i class="uil uil-ellipsis-h"></i>
-                                </span>
-                            </div>
-                            <div class="photo">
-                                <img src="assets/infos/R.jpeg">                       </div>
-                            <div class="action-buttons">
-                                <div class="interaction-buttons">
-                                    <span><i class="uil uil-heart"></i></span>
-                                    <span><i class="uil uil-comment-dots"></i></span>
-                                    <span><i class="uil uil-share-alt"></i></span>
-                                </div>
-                                <div class="bookmark">
-                                    <span><i class="uil uil-bookmark-full"></i></span>
-                                </div>
-                            </div>
-                            <div class="liked-by">
-                                <span><img src="./assets/profile_img-44x44/profile3-44x44.jpg" ></span>
-                                <span><img src="./assets/profile_img-44x44/profile6-44x44.jpg" ></span>
-                                <span><img src="./assets/profile_img-44x44/profile2-44x44.jpg" ></span>
-                                <p>Liked by <b>Spider-Man</b> and <b>7,231 others</b></p>
-                            </div>
-
-                            <div class="caption">
-                                <p><b>Frosty</b> Check out this game running on the Steam Deck! <span class="hash-tag">#Amazing</span></p>
-                            </div>
-                            <div class="comments text-muted">View All 532 comments</div>
-                        </div>
                         <?php
                         foreach($tabRes as $uneLigne) {
                             ?>
@@ -311,7 +363,7 @@
                                         </div>
                                         <div class="ingo">
                                             <?php echo "  <h3>".$uneLigne["Titre"]."</h3>";?>
-                                            <small><?php echo $uneLigne["Titre"] ?>, <span class="capitalise"><?php echo $uneLigne["created_at"] ?></span></small>
+                                            <small><?php echo $uneLigne["contenu"] ?>, <span class="capitalise"><?php echo $uneLigne["created_at"] ?></span></small>
                                         </div>
                                     </div>
                                     <span class="edit">
@@ -324,27 +376,7 @@
                                         echo '<img src="data:image/jpeg;base64,' . base64_encode($uneLigne['photo']) . '" alt="Photo de l\'objet">';
                                     }  ?>
                                 </div>
-                                <div class="action-buttons">
-                                    <div class="interaction-buttons">
-                                        <span><i class="uil uil-heart"></i></span>
-                                        <span><i class="uil uil-comment-dots"></i></span>
-                                        <span><i class="uil uil-share-alt"></i></span>
-                                    </div>
-                                    <div class="bookmark">
-                                        <span><i class="uil uil-bookmark-full"></i></span>
-                                    </div>
-                                </div>
-                                <div class="liked-by">
-                                    <span><img src="assets/infos/R.jpeg"></span>
-                                    <span><img src="assets/infos/R.jpeg"></span>
-                                    <span><img src="assets/infos/R.jpeg"></span>
-                                    <p>Liked by <b>Spider-Man</b> and <b>7,231 others</b></p>
-                                </div>
-
-                                <div class="caption">
-                                    <p><b>Frosty</b> <?php echo $uneLigne["contenu"] ?> <span class="hash-tag">#Amazing</span></p>
-                                </div>
-                                <div class="comments text-muted">View All 532 comments</div>
+                                
                             </div>
                             <?php
                         }
@@ -356,166 +388,45 @@
                 <!--Right Section-->
                 <div class="right">
                     <!--Start of Messages-->
-                    <div class="messages">
-                        <div class="heading">
-                            <h4>Messages</h4><i class="uil uil-edit"></i>
-                        </div>
-                        
-                        <!--End of Messages Category-->
-                        <!--Message One-->
-                        <div class="message">
-                            <div class="profile-photo">
-                                <img src="./assets/profile_img-88x88/Profile4-88x-88.jpg" >
-                            </div>
-                            <div class="message-body">
-                                <h6>Ferhan Ahmed</h6>
-                                <p class="text-muted">I love my cars too much 😍</p>
-                            </div>
-                        </div>
-                        <!--Message Two-->
-                        <div class="message">
-                            <div class="profile-photo">
-                                <img src="./assets/profile_img-88x88/profile2-88x88.jpg" >
-                                <div class="active"></div>
-                            </div>
-                            <div class="message-body">
-                                <h6>Tayyab Javed</h6>
-                                <p class="text-bold">Hey Check Out My Bird 🦜</p>
-                            </div>
-                        </div>
-                        <!--Message Three-->
-                        <div class="message">
-                            <div class="profile-photo">
-                                <img src="./assets/profile_img-88x88/profile7-88x88.jpg" >
-                            </div>
-                            <div class="message-body">
-                                <h6>Warm Soda</h6>
-                                <p class="text-muted">Look at my doggy 🐶</p>
-                            </div>
-                        </div>
-                        <!--Message Four-->
-                        <div class="message">
-                            <div class="profile-photo">
-                                <img src="./assets/profile_img-88x88/profile6-88x88.jpg" >
-                                <div class="active"></div>
-                            </div>
-                            <div class="message-body">
-                                <h6>Sheikhba Mohammed</h6>
-                                <p class="text-bold">🐍 Hey, stop ignoring me!</p>
-                            </div>
-                        </div>
-                        <div class="message">
-                            <div class="profile-photo">
-                                <img src="./assets/profile_img-88x88/profile6-88x88.jpg" >
-                                <div class="active"></div>
-                            </div>
-                            <div class="message-body">
-                                <h6>Sheikhba Mohammed</h6>
-                                <p class="text-bold">🐍 Hey, stop ignoring me!</p>
-                            </div>
-                        </div>
-                        <div class="message">
-                            <div class="profile-photo">
-                                <img src="./assets/profile_img-88x88/profile6-88x88.jpg" >
-                                <div class="active"></div>
-                            </div>
-                            <div class="message-body">
-                                <h6>Sheikhba Mohammed</h6>
-                                <p class="text-bold">🐍 Hey, stop ignoring me!</p>
-                            </div>
-                        </div>
-                        <div class="message">
-                            <div class="profile-photo">
-                                <img src="./assets/profile_img-88x88/profile6-88x88.jpg" >
-                                <div class="active"></div>
-                            </div>
-                            <div class="message-body">
-                                <h6>Sheikhba Mohammed</h6>
-                                <p class="text-bold">🐍 Hey, stop ignoring me!</p>
-                            </div>
-                        </div>
-                        <div class="message">
-                            <div class="profile-photo">
-                                <img src="./assets/profile_img-88x88/profile6-88x88.jpg" >
-                                <div class="active"></div>
-                            </div>
-                            <div class="message-body">
-                                <h6>Sheikhba Mohammed</h6>
-                                <p class="text-bold">🐍 Hey, stop ignoring me!</p>
-                            </div>
-                        </div>
-                        <div class="message">
-                            <div class="profile-photo">
-                                <img src="./assets/profile_img-88x88/profile6-88x88.jpg" >
-                                <div class="active"></div>
-                            </div>
-                            <div class="message-body">
-                                <h6>Sheikhba Mohammed</h6>
-                                <p class="text-bold">🐍 Hey, stop ignoring me!</p>
-                            </div>
-                        </div>
-                        <div class="message">
-                            <div class="profile-photo">
-                                <img src="./assets/profile_img-88x88/profile6-88x88.jpg" >
-                                <div class="active"></div>
-                            </div>
-                            <div class="message-body">
-                                <h6>Sheikhba Mohammed</h6>
-                                <p class="text-bold">🐍 Hey, stop ignoring me!</p>
-                            </div>
-                        </div>
-                        <div class="message">
-                            <div class="profile-photo">
-                                <img src="./assets/profile_img-88x88/profile6-88x88.jpg" >
-                                <div class="active"></div>
-                            </div>
-                            <div class="message-body">
-                                <h6>Sheikhba Mohammed</h6>
-                                <p class="text-bold">🐍 Hey, stop ignoring me!</p>
-                            </div>
-                        </div>
-                        <div class="message">
-                            <div class="profile-photo">
-                                <img src="./assets/profile_img-88x88/profile6-88x88.jpg" >
-                                <div class="active"></div>
-                            </div>
-                            <div class="message-body">
-                                <h6>Sheikhba Mohammed</h6>
-                                <p class="text-bold">🐍 Hey, stop ignoring me!</p>
-                            </div>
-                        </div>
-                        <div class="message">
-                            <div class="profile-photo">
-                                <img src="./assets/profile_img-88x88/profile6-88x88.jpg" >
-                                <div class="active"></div>
-                            </div>
-                            <div class="message-body">
-                                <h6>Sheikhba Mohammed</h6>
-                                <p class="text-bold">🐍 Hey, stop ignoring me!</p>
-                            </div>
-                        </div>
-                        <div class="message">
-                            <div class="profile-photo">
-                                <img src="./assets/profile_img-88x88/profile6-88x88.jpg" >
-                                <div class="active"></div>
-                            </div>
-                            <div class="message-body">
-                                <h6>Sheikhba Mohammed</h6>
-                                <p class="text-bold">🐍 Hey, stop ignoring me!</p>
-                            </div>
-                        </div>
-                        <div class="message">
-                            <div class="profile-photo">
-                                <img src="./assets/profile_img-88x88/profile6-88x88.jpg" >
-                                <div class="active"></div>
-                            </div>
-                            <div class="message-body">
-                                <h6>Sheikhba Mohammed</h6>
-                                <p class="text-bold">🐍 Hey, stop ignoring me!</p>
-                            </div>
-                        </div>
+                    <!-- Remplacer la section des messages statiques par -->
 
-                    </div>
+  <!-- Modifier la section des messages comme ceci -->
+<!-- Dans la section messages -->
+<div class="messages">
+    <div class="heading">
+        <h4>Messages</h4>
+    </div>
+    
+    <div class="scrollable-messages" id="messages-container">
+        <?php foreach ($messages as $message): ?>
+        <div class="message">
+            <div class="message-body">
+                <h6>
+                    <?= htmlspecialchars($message['expediteur_prenom'] . ' ' . $message['expediteur_nom']) ?>
+                </h6>
+                <p><?= htmlspecialchars($message['contenu']) ?></p>
+                <small>
+                    <?= date('H:i', strtotime($message['date_heure'])) ?>
+                </small>
+            </div>
+        </div>
+        <?php endforeach; ?>
+    </div>
+    
+    <!-- Formulaire d'envoi de message -->
+    <div class="message-form">
+        <form id="sendMessageForm">
+            <div class="input-group">
+                <input type="text" name="message" id="messageInput" 
+                       placeholder="Écrire un message..." class="input" required>
+                <button type="submit" class="btn btn-primary">
+                    <i class="uil uil-message"></i> Envoyer
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
                     <!--End of Message-->
                     <!--Friend Request-->
                     
@@ -603,41 +514,147 @@
                                 padding: 20px;
                                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
                                 border-radius: 8px;">
-                        <h2>Formulaire de Publication</h2>
-                        <form action="controleurs/poste.php" method="post" enctype="multipart/form-data">
-                            <label for="titre">Titre :</label>
-                            <input type="text" id="titre" name="titre" required class="input">
+                                
+                                <h2>Formulaire de Publication</h2>
+<form action="controleurs/Postegr.php" method="post" enctype="multipart/form-data">
+    <!-- Champs cachés pour l'ID du groupe et l'ID utilisateur -->
+    <input type="hidden" name="id_groupe" id="id_groupe" value="<?php echo isset($_SESSION['id_groupe']) ? $_SESSION['id_groupe'] : ''; ?>">
+    <input type="hidden" name="id" id="id" value="<?php echo isset($_SESSION['id']) ? $_SESSION['id'] : ''; ?>">
 
-                            <label for="contenu">Contenu :</label>
-                            <textarea id="contenu" name="contenu" rows="8" required class="input"></textarea>
+    <label for="titre">Titre :</label>
+    <input type="text" id="titre" name="titre" required class="input">
 
-                            <div class="file-input-container">
-                                <label for="image">Sélectionner une image</label>
-                                <input type="file" id="image" name="image" accept="image/*" required>
-                                <span id="file-name">Aucune image sélectionnée</span>
-                            </div>
+    <label for="contenu">Contenu :</label>
+    <textarea id="contenu" name="contenu" rows="8" required class="input"></textarea>
 
-                            <button class="button" type="submit">Publier</button>
-                        </form>
+    <div class="file-input-container">
+        <label for="image">Sélectionner une image :</label>
+        <input type="file" id="image" name="image" accept="image/*" required onchange="updateFileName()">
+        <span id="file-name">Aucune image sélectionnée</span>
+    </div>
+
+    <button class="button" type="submit">Publier</button>
+</form>
                     </div>
                 </div>
                 
             </div>
         
         </div>
-        
-        <script>
-            const fileInput = document.getElementById('image');
-            const fileName = document.getElementById('file-name');
 
-            fileInput.addEventListener('change', function() {
-                if (fileInput.files.length > 0) {
-                    fileName.textContent = fileInput.files[0].name;
-                } else {
-                    fileName.textContent = 'Aucune image sélectionnée';
+
+        <script>
+let currentGroupId = null;
+
+async function submitGroupForm() {
+    const formData = new FormData(document.getElementById('createGroupForm'));
+    
+    try {
+        const response = await fetch('routeur.php?action=creerGroupe', {
+            method: 'POST',
+            body: formData
+        });
+
+        // Gérer la redirection côté serveur
+        if (response.redirected) {
+            window.location.href = response.url;
+            return;
+        }
+
+        const data = await response.json();
+        if (!data.success) {
+            throw new Error(data.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert(error.message || "Erreur lors de la création du groupe");
+    }
+}
+
+
+// Gestion des modals
+function openModal(modalId) {
+    document.getElementById(modalId).style.display = 'block';
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+}
+
+window.onclick = function(event) {
+    if (event.target.classList.contains('modal')) {
+        closeModal(event.target.id);
+    }
+}
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closeModal('createGroupModal');
+        closeModal('addMembersModal');
+    }
+});
+</script>
+        
+        <script> 
+
+    
+        $(document).ready(function() {
+    // Afficher la liste au focus
+    $("#searchGroup").on("focus", function() {
+        showGroupList();
+    });
+
+    // Gestion de la saisie
+    $("#searchGroup").on("input", function() {
+        var searchText = $(this).val();
+        
+        if(searchText.length > 0) {
+            $.ajax({
+                url: 'routeur.php?action=searchGroups',
+                type: 'GET',
+                data: { search: searchText },
+                success: function(data) {
+                    $("#groupList").html(data).show();
                 }
             });
-        </script>
+        } else {
+            showGroupList();
+        }
+    });
+
+    // Cacher la liste quand on clique dehors
+    $(document).on('click', function(e) {
+        if (!$(e.target).closest('#searchGroup, #groupList').length) {
+            $("#groupList").hide();
+        }
+    });
+});
+
+function showGroupList() {
+    $.ajax({
+        url: 'routeur.php?action=searchGroups',
+        type: 'GET',
+        success: function(data) {
+            $("#groupList")
+                .html(data)
+                .show()
+                .css({
+                    'top': $('#searchGroup').offset().top + $('#searchGroup').outerHeight() + 10,
+                    'left': '50%',
+                    'transform': 'translateX(-50%)'
+                });
+        }
+    });
+}
+</script>  
+
+<script>
+function updateFileName() {
+    var input = document.getElementById('image');
+    var fileNameDisplay = document.getElementById('file-name');
+    fileNameDisplay.textContent = input.files.length > 0 ? input.files[0].name : "Aucune image sélectionnée";
+}
+</script>
         <script>
             // Get the modal
             var modal = document.getElementById("myModal");
@@ -646,7 +663,8 @@
             var btn = document.getElementById("myBtn");
 
             // Get the <span> element that closes the modal
-            var span = document.getElementsByClassName("close")[0];
+            //var span = document.getElementsByClassName("close")[0];
+            var span = modal.querySelector('.close');
 
             // When the user clicks the button, open the modal 
             btn.onclick = function() {
@@ -665,6 +683,36 @@
             }
             }
         </script>
+        <script>
+// Envoi de message
+$('#sendMessageForm').submit(function(e) {
+    e.preventDefault();
+    const message = $('#messageInput').val().trim();
+    const idGroupe = <?= $_SESSION['id_groupe'] ?? 0 ?>;
+
+    if(message && idGroupe) {
+        $.post('routeur.php?action=envoyerMessage', {
+            contenu: message,
+            id_groupe: idGroupe
+        }, function() {
+            $('#messageInput').val('');
+            refreshMessages();
+        });
+    }
+});
+
+// Rafraîchissement automatique
+function refreshMessages() {
+    $('#messages-container').load(' #messages-container > *', function() {
+        this.scrollTop = this.scrollHeight;
+    });
+}
+
+setInterval(refreshMessages, 3000);
+
+// Scroll automatique vers le bas
+$('.scrollable-messages').scrollTop($('.scrollable-messages')[0].scrollHeight);
+</script>
         <script src="js/script.js"></script>
     </body>
 </html>

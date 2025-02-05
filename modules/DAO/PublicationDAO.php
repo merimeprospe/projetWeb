@@ -14,9 +14,38 @@ class PublicationDAO {
         if ($this->pdo->query($sql) == TRUE) {
             header("Location:../routeur.php?action=accueil");
         } else {
-            echo "Erreur: " . $sql . "<br>" . $this->conn->error;
+            echo "Erreur: " . $sql . "<br>" . $this->pdo->error;
         }
     }
+    public function creategroup($id_user, $id_groupe, $titre, $contenu, $image) {
+        try {
+            // Récupération du fichier image sous forme de données binaires
+            $photo = file_get_contents($image['tmp_name']);
+    
+            // Requête préparée pour éviter l'injection SQL
+            $sql = "INSERT INTO publication (id_user, id_groupe, titre, contenu, photo) 
+                    VALUES (:id_user, :id_groupe, :titre, :contenu, :photo)";
+            
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindParam(':id_user', $id_user, PDO::PARAM_INT);
+            $stmt->bindParam(':id_groupe', $id_groupe, PDO::PARAM_INT);
+            $stmt->bindParam(':titre', $titre, PDO::PARAM_STR);
+            $stmt->bindParam(':contenu', $contenu, PDO::PARAM_STR);
+            $stmt->bindParam(':photo', $photo, PDO::PARAM_LOB);
+    
+            if ($stmt->execute()) {
+                // Redirection vers le profil du groupe après publication
+                header('Location: ../routeur.php?action=mesGroupes&id_groupe=' . $id_groupe);
+                exit(); // Arrêter l'exécution après la redirection
+            } else {
+                echo "Erreur lors de l'insertion.";
+            }
+        } catch (PDOException $e) {
+            echo "Erreur SQL : " . $e->getMessage();
+        }
+    }
+
+    
  
 
     public function read($id_pub) {
@@ -62,7 +91,7 @@ class PublicationDAO {
     
         /* if ($result->rowCount() > 0) {
             while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                echo "ID: " . $row["id_pub"] . " - Titre: " . $row["Titre"] . " - Contenu: " . $row["contenu"] . " - Photo: " . " - ID Utilisateur: " . $row["id_user"] . "<br>";
+                echo "ID: " . $row["id_pub"] . " - Tire: " . $row["Titre"] . " - Contenu: " . $row["contenu"] . " - Photo: " . " - ID Utilisateur: " . $row["id_user"] . "<br>";
                 echo '<img src="data:image/jpeg;base64,' . base64_encode($row['photo']) . '" alt="Photo de l\'objet">';
             }
         } else {
@@ -71,4 +100,6 @@ class PublicationDAO {
 
         return $result->fetchAll(PDO::FETCH_ASSOC);
     }
+   
+  
 }

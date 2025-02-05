@@ -17,6 +17,7 @@ class AmieController {
         $conn = $con->getconnection();
         $this->amieDAO = new AmieDAO($conn);
         $this->utilisateurDAO = new UtilisateurDAO($conn);
+        
     }
 
     public function listes() {
@@ -33,7 +34,7 @@ class AmieController {
     public function control($demandeur, $amie){
         
         $ami = new Amie();
-        $ami= $amieDAO->findByDemandeurAndAmie($demandeur, $amie);
+        $ami= $this->amieDAO->findByDemandeurAndAmie($demandeur, $amie);
         return $ami;
     }
 
