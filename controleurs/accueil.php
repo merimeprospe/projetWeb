@@ -1,6 +1,5 @@
 <?php
 
-
 class PublicationController {
 
     private $publicationDAO;

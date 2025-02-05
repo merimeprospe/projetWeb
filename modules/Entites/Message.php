@@ -1,13 +1,15 @@
 <?php
 
-class Message {
+class Message
+{
     private $id_message;
     private $contenu;
     private $id_user;
     private $id_groupe;
     private $date_heure;
 
-    public function __construct($id_message, $contenu, $id_user, $id_groupe, $date_heure) {
+    public function __construct($id_message, $contenu, $id_user, $id_groupe, $date_heure)
+    {
         $this->id_message = $id_message;
         $this->contenu = $contenu;
         $this->id_user = $id_user;
@@ -15,39 +17,48 @@ class Message {
         $this->date_heure = $date_heure;
     }
 
-    public function getIdMessage() {
+    public function getIdMessage()
+    {
         return $this->id_message;
     }
 
-    public function getContenu() {
+    public function getContenu()
+    {
         return $this->contenu;
     }
 
-    public function getIdUser() {
+    public function getIdUser()
+    {
         return $this->id_user;
     }
 
-    public function getIdGroupe() {
+    public function getIdGroupe()
+    {
         return $this->id_groupe;
     }
 
-    public function getDateHeure() {
+    public function getDateHeure()
+    {
         return $this->date_heure;
     }
 
-    public function setContenu($contenu) {
+    public function setContenu($contenu)
+    {
         $this->contenu = $contenu;
     }
 
-    public function setIdUser($id_user) {
+    public function setIdUser($id_user)
+    {
         $this->id_user = $id_user;
     }
 
-    public function setIdGroupe($id_groupe) {
+    public function setIdGroupe($id_groupe)
+    {
         $this->id_groupe = $id_groupe;
     }
 
-    public function setDateHeure($date_heure) {
+    public function setDateHeure($date_heure)
+    {
         $this->date_heure = $date_heure;
     }
 }

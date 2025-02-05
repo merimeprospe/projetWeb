@@ -1,6 +1,7 @@
 <?php
-require_once "../utils_inc/Data.php";
-class Utilisateur {
+//require_once "../utils_inc/Data.php";
+class Utilisateur
+{
     private $id_user;
     private $nom;
     private $prenom;
@@ -13,25 +14,31 @@ class Utilisateur {
     private $ville;
     private $pays;
     private $bio;
+    private $travail;
+    private $loisirs;
     private $photo_profil;
     private $photo_couverture;
+    private $is_suspended ;
 
 
     public function __construct(
-        $id_user = null,
-        $nom = null,
-        $prenom = null,
-        $email = null,
-        $password = null,
-        $status_connexion = 'offline',
-        $id_role = null,
-        $creer_le = null,
-        $sexe = null,
-        $ville = null,
-        $pays = null,
-        $bio = null,
+        $id_user,
+        $nom = "",
+        $prenom = "",
+        $email = "",
+        $password = "",
+        $status_connexion = "",
+        $id_role = 1,
+        $creer_le = "",
+        $sexe = "Non spécifié",
+        $ville = "",
+        $pays = "",
         $photo_profil = null,
-        $photo_couverture = null
+        $travail = "",
+        $loisirs = "",
+        $photo_couverture = null,
+        $is_suspended = 0,
+        $bio = ""
     ) {
         $this->id_user = $id_user;
         $this->nom = $nom;
@@ -46,75 +53,110 @@ class Utilisateur {
         $this->pays = $pays;
         $this->bio = $bio;
         $this->photo_profil = $photo_profil;
+        $this->travail = $travail;
+        $this->loisirs = $loisirs;
         $this->photo_couverture = $photo_couverture;
+        $this->is_suspended = $is_suspended;
     }
 
     // Getters
-    public function getIdUser() {
+    public function getIdUser()
+    {
         return $this->id_user;
     }
 
-    public function getNom() {
+    public function getNom()
+    {
         return $this->nom;
     }
 
-    public function getPrenom() {
+    public function getPrenom()
+    {
         return $this->prenom;
     }
 
-    public function getEmail() {
+    public function getEmail()
+    {
         return $this->email;
     }
 
-    public function getPassword() {
+    public function getPassword()
+    {
         return $this->password;
     }
 
-    public function getStatusConnexion() {
+    public function getStatusConnexion()
+    {
         return $this->status_connexion;
     }
 
-    public function getIdRole() {
+    public function getIdRole()
+    {
         return $this->id_role;
     }
 
-    public function getCreer_Le() {
+    public function getCreer_Le()
+    {
         return $this->creer_le;
     }
 
-    public function getSexe() {
+    public function getSexe()
+    {
         return $this->sexe;
     }
 
-    public function getVille() {
+    public function getVille()
+    {
         return $this->ville;
     }
 
-    public function getPays() {
+    public function getPays()
+    {
         return $this->pays;
     }
 
-    public function getBio() {
+    public function getBio()
+    {
         return $this->bio;
     }
 
-    public function getPhotoProfil() {
+    public function getPhotoProfil()
+    {
         return $this->photo_profil;
     }
-    public function getPhotoCouverture() {
+
+
+    public function getTravail()
+    {
+        return $this->travail;
+    }
+
+    public function getLoisirs()
+    {
+        return $this->loisirs;
+    }
+    public function getPhotoCouverture()
+    {
         return $this->photo_couverture;
+    }
+    public function getIsSuspended()
+    {
+        return $this->is_suspended;
     }
 
     // Setters
-    public function setNom($nom) {
+    public function setNom($nom)
+    {
         $this->nom = $nom;
     }
 
-    public function setPrenom($prenom) {
+    public function setPrenom($prenom)
+    {
         $this->prenom = $prenom;
     }
 
-    public function setEmail($email) {
+    public function setEmail($email)
+    {
         if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $this->email = $email;
         } else {
@@ -122,11 +164,13 @@ class Utilisateur {
         }
     }
 
-    public function setPassword($password) {
+    public function setPassword($password)
+    {
         $this->password = password_hash($password, PASSWORD_BCRYPT);
     }
 
-    public function setStatusConnexion($status_connexion) {
+    public function setStatusConnexion($status_connexion)
+    {
         if (in_array($status_connexion, ['online', 'offline', 'inactif'])) {
             $this->status_connexion = $status_connexion;
         } else {
@@ -134,15 +178,18 @@ class Utilisateur {
         }
     }
 
-    public function setIdRole($id_role) {
+    public function setIdRole($id_role)
+    {
         $this->id_role = $id_role;
     }
 
-    public function setCreerLe($creer_le) {
+    public function setCreerLe($creer_le)
+    {
         $this->creer_le = $creer_le;
     }
 
-    public function setSexe($sexe) {
+    public function setSexe($sexe)
+    {
         if (in_array($sexe, ['Homme', 'Femme', ''])) {
             $this->sexe = $sexe;
         } else {
@@ -150,22 +197,42 @@ class Utilisateur {
         }
     }
 
-    public function setVille($ville) {
+    public function setVille($ville)
+    {
         $this->ville = $ville;
     }
 
-    public function setPays($pays) {
+    public function setPays($pays)
+    {
         $this->pays = $pays;
     }
 
-    public function setBio($bio) {
+    public function setBio($bio)
+    {
         $this->bio = $bio;
     }
 
-    public function setPhotoProfil($photo_profil) {
+    public function setPhotoProfil($photo_profil)
+    {
         $this->photo_profil = $photo_profil;
     }
-    public function setPhotoCouverture($photo_couverture) {
+
+    public function setTravail($travail)
+    {
+        $this->travail = $travail;
+    }
+
+    public function setLoisirs($loisirs)
+    {
+        $this->loisirs = $loisirs;
+    }
+
+    public function setPhotoCouverture($photo_couverture)
+    {
         $this->photo_couverture = $photo_couverture;
+    }
+    public function setIsSuspended($is_suspended)
+    {
+        $this->is_suspended = $is_suspended;
     }
 }

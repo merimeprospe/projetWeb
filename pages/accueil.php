@@ -38,7 +38,7 @@
                     <label class="btn btn-primary" onclick="rediriger()" for="create post">?</label>
                     <div class="profile-photo">
 
-                        <a href="controleurs/profile.php">
+                        <a href="routeur.php?action=profile">
                             <!------<img src="assets/profile_img-88x88/profile1-88x88.jpg">------->
                             <?php if ($utilisateur['photo_profil']) {
                                 # code...
@@ -181,22 +181,10 @@
                                 <div class="action-buttons">
                                     <div class="interaction-buttons">
                                         <span><i class="uil uil-heart"></i></span>
-                                        <span><i class="uil uil-comment-dots"></i></span>
-                                        <span><i class="uil uil-share-alt"></i></span>
-                                    </div>
-                                    <div class="bookmark">
-                                        <span><i class="uil uil-bookmark-full"></i></span>
                                     </div>
                                 </div>
-                                <div class="liked-by">
-                                    <span><img src="assets/infos/R.jpeg"></span>
-                                    <span><img src="assets/infos/R.jpeg"></span>
-                                    <span><img src="assets/infos/R.jpeg"></span>
-                                    <p>Liked by <b>Spider-Man</b> and <b>7,231 others</b></p>
-                                </div>
-
                                 <div class="caption">
-                                    <p><b>Frosty</b> <?php echo $uneLigne->contenu ?> <span class="hash-tag">#Amazing</span></p>
+                                    <p> <?php echo $uneLigne->contenu ?> <span class="hash-tag">#Amazing</span></p>
                                 </div>
                                 <div class="comments text-muted">View All 532 comments</div>
                             </div>
@@ -283,12 +271,13 @@
                             <div class="request" id="<?php echo 'btn' . $uneLigne->id ?>">
                                 <div class="info">
                                     <div class="profile-photo">
+                                        <a href="<?php echo 'routeur.php?action=profile&id='  . $uneLigne->id_user ?>">
                                     <?php if ($uneLigne->photo_profil) {
                                             # code...
                                             echo '<img src="data:image/jpeg;base64,' . base64_encode($uneLigne->photo_profil) . '" alt="Photo de l\'objet" class="profile-picture"> ';
                                         }  else {?>
                                             <img src="assets/infos/1.png" />
-                                    <?php }  ?> 
+                                    <?php }  ?> </a>
                                     </div>
                                     <div>
                                         <h5><?php echo $uneLigne->nom ?></h5>
