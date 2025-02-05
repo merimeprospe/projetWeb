@@ -13,7 +13,19 @@
       padding: 0; 
       font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; 
     }
-    
+    .back-btn {
+        position: absolute;
+        top: 30px;
+        left: 30px;
+        color: #0998c1;
+        font-size: 1.5rem;
+        z-index: 100;
+        transition: color 0.3s ease;
+    }
+
+    .back-btn:hover {
+        color: #ff6b35;
+    }
     body { background: #f0f2f5; }
 
     .container { 
@@ -260,6 +272,9 @@
 
 <body>
   <div class="container">
+     <a href="routeur.php?action=mesGroupes&id_groupe=<?php echo $group['id_groupe']; ?>" class="back-btn">
+        <i class="fas fa-arrow-left"></i>
+    </a>
     <div class="group-header">
       <div class="cover-photo">
         <?php if (!empty($group['photogroupe'])): ?>
@@ -316,7 +331,7 @@
                 </a>
               <?php endif; ?>
               <?php if ($member['id_user'] === $group['id_admin']): ?>
-                <i class="fas fa-crown" style="color: #ffd700;"></i>
+                <i class="fas fa-crown" style="color:rgb(0, 64, 255);"></i>
               <?php endif; ?>
             </div>
           </div>
@@ -360,7 +375,7 @@
               <div class="user-item">
                 <span><?= htmlspecialchars($utilisateur['prenom'] . ' ' . $utilisateur['nom']) ?></span>
                 <a href="routeur.php?action=ajouterMembre&id_groupe=<?= $group['id_groupe'] ?>&id_user=<?= $utilisateur['id_user'] ?>" 
-                   class="btn btn-add">
+                   class="btn btn-primary btn-add">
                   <i class="fas fa-user-plus"></i> Ajouter
                 </a>
               </div>
@@ -379,10 +394,7 @@
                        onclick="return confirm('Retirer ce membre ?')">
                       <i class="fas fa-times"></i>
                     </a>
-                    <a href="routeur.php?action=nommerAdmin&id_groupe=<?= $group['id_groupe'] ?>&id_user=<?= $membre['id_user'] ?>" 
-                       class="btn btn-warning">
-                      <i class="fas fa-crown"></i>
-                    </a>
+                   
                   <?php endif; ?>
                 </div>
               </div>
