@@ -148,13 +148,12 @@
                 cursor: pointer;
             }
        /* Styles pour les messages */
-
-       .messages {
+.messages {
     position: fixed;
-    
+   
     top: 80px; /* Ajustez selon la hauteur de votre header */
     width: 300px; /* Largeur fixe ou pourcentage */
-    height: calc(100vh - 160px); /* 160px = top + bottom margins */
+    height: calc(110vh - 160px); /* 160px = top + bottom margins */
     background: white;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -220,6 +219,10 @@ html {
 
 
 
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+}
 
 .message {
     margin: 15px 0;
@@ -254,8 +257,8 @@ html {
     position: sticky;
     bottom: 0;
     background: white;
-    padding: 15px 0;
-    margin-top: auto; /* Garde le formulaire en bas */
+    padding-top: 15px;
+    border-top: 1px solid #eee;
 }
 
 .input-group {
@@ -273,8 +276,34 @@ html {
     border-radius: 25px;
     padding: 12px 25px;
 }
+.scrollable-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-bottom: 15px;
+}
+html {
+    scroll-behavior: smooth;
+}
 
+/* Style personnalisé de la scrollbar */
+.scrollable-messages::-webkit-scrollbar {
+    width: 6px;
+}
 
+.scrollable-messages::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.scrollable-messages::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+.scrollable-messages::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
 /* Ajoutez ces styles dans votre balise <style> */
 .sidebar {
     height: calc(95vh - 150px); /* Ajustez la valeur selon votre header */
@@ -283,7 +312,7 @@ html {
     margin-top: 20px; /* Espace au-dessus du titre "MY GROUPS" */
 }
 
-.group-liste {
+.group-list {
     flex: 1;
     overflow-y: auto;
     padding-right: 8px;
@@ -291,29 +320,77 @@ html {
 }
 
 /* Style personnalisé de la scrollbar */
-.group-liste::-webkit-scrollbar {
+.group-list::-webkit-scrollbar {
     width: 6px;
 }
 
-.group-liste::-webkit-scrollbar-track {
+.group-list::-webkit-scrollbar-track {
     background: #f1f1f1;
     border-radius: 3px;
 }
 
-.group-liste::-webkit-scrollbar-thumb {
+.group-list::-webkit-scrollbar-thumb {
     background: #888;
     border-radius: 3px;
 }
 
-.group-liste::-webkit-scrollbar-thumb:hover {
+.group-list::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
 
 /* Ajustez la hauteur des éléments de groupe */
-.group-liste .profile {
+.group-list .profile {
     min-height: 70px; /* Hauteur minimale des items */
     margin: 8px 0;
 }
+
+
+
+
+/* Scrollbar globale */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #0998c1; /* Votre couleur bleue */
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #087ea4; /* Une nuance plus foncée au survol */
+}
+
+/* Scrollbar spécifique pour les messages */
+.scrollable-messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scrollable-messages::-webkit-scrollbar-thumb {
+    background: #0998c1;
+}
+
+/* Scrollbar spécifique pour la liste des groupes */
+.group-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.group-list::-webkit-scrollbar-thumb {
+    background: #0998c1;
+}
+
+/* Scrollbar pour Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #0998c1 #f1f1f1;
+}
+            
         </style>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </head>
